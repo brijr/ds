@@ -24,12 +24,12 @@
   --text-fluid-4xl: clamp(4.209rem, 3rem + 4vw, 5.61rem);
 
   --body-weight: 400;
-  --body-leading: 1.4;
-  --body-tracking: 0;
+  --body-leading: 1.3;
+  --body-tracking: -0.01rem;
 
   --heading-weight: 500;
   --heading-leading: 1.1;
-  --heading-tracking: -0.02em;
+  --heading-tracking: -0.06rem;
 
   --prose-width: 65ch;
 
@@ -87,8 +87,8 @@
   h6 {
     font-size: var(--text-fluid-base);
     font-weight: var(--heading-weight);
-    line-height: var(--heading-leading);
-    letter-spacing: var(--heading-tracking);
+    line-height: var(--body-leading);
+    letter-spacing: var(--body-tracking);
   }
 
   /* Body Text */
