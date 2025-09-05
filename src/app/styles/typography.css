@@ -25,11 +25,11 @@
   --text-fluid-4xl: clamp(4.209rem, 3rem + 4vw, 5.61rem);
 
   --body-weight: light;
-  --body-leading: 1.5;
+  --body-leading: 1.4;
   --body-tracking: 0;
 
   --heading-weight: semibold;
-  --heading-leading: 1.2;
+  --heading-leading: 1.1;
   --heading-tracking: -0.02em;
 
   --prose-width: 65ch;
