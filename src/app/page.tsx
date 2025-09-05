@@ -42,6 +42,7 @@ export default function Home() {
       </div>
 
       <div className="p-4 space-y-4">
+        <p className="text-center">Typography Demo</p>
         {elementTypes.map((type) => (
           <Wrapper key={type} as={type as React.ElementType}>
             {demoText}
