@@ -136,11 +136,10 @@
   blockquote {
     font-size: var(--text-lg);
     font-weight: var(--body-weight);
-    font-style: italic;
     line-height: var(--body-leading);
     letter-spacing: var(--body-tracking);
     padding-left: var(--space-base);
-    border-left-width: 3px;
+    border-left-width: 0.125rem;
   }
 }
 
