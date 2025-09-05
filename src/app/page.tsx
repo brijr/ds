@@ -30,9 +30,11 @@ export default function Home() {
   return (
     <main className="divide-y divide-border">
       <div className="grid gap-1 p-4 bg-muted">
-        <label className="text-sm text-muted-foreground">Demo Text</label>
+        <label className="text-sm text-muted-foreground max-w-4xl mx-auto">
+          Demo Text
+        </label>
         <input
-          className="w-full border border-border p-2 bg-background rounded"
+          className="w-full border border-border p-2 bg-background rounded max-w-lg mx-auto"
           type="text"
           value={demoText}
           onChange={(e) => setDemoText(e.target.value)}
@@ -60,11 +62,11 @@ const Wrapper = ({
   const Element = as;
 
   return (
-    <section className="border border-border">
+    <section className="border border-border max-w-4xl mx-auto">
       <div className="text-sm text-muted-foreground p-2 border-b border-border bg-muted">
         {as as string}
       </div>
-      <div className="line-clamp-2 p-2">
+      <div className="truncate p-2">
         <Element>{children}</Element>
       </div>
     </section>
