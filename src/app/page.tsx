@@ -1,27 +1,30 @@
+const text = `
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+`;
+
 export default function Home() {
   return (
-    <main className="p-8">
-      <TypeWrapper type="h1">
-        <p>This is some text!</p>
-      </TypeWrapper>
+    <main className="p-8 space-y-4">
+      <Wrapper as="h1">{text}</Wrapper>
+      <Wrapper as="h2">{text}</Wrapper>
+      <Wrapper as="h3">{text}</Wrapper>
+      <Wrapper as="a">{text}</Wrapper>
     </main>
   );
 }
 
-const TypeWrapper = ({
+const Wrapper = ({
   children,
-  type,
+  as,
 }: {
   children: React.ReactNode;
-  type: string;
+  as: React.ElementType;
 }) => {
+  const Element = as;
+
   return (
-    <div className="p-4 border">
-      {type === "h1" && <h1>{children}</h1>}
-      {type === "h2" && <h2>{children}</h2>}
-      {type === "h3" && <h3>{children}</h3>}
-      {type === "h4" && <h4>{children}</h4>}
-      {type === "h5" && <h5>{children}</h5>}
+    <div className="p-4 border line-clamp-2">
+      <Element>{children}</Element>
     </div>
   );
 };
