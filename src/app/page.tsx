@@ -22,10 +22,6 @@ const elementTypes = [
   "strong",
   "small",
   "mark",
-  "del",
-  "ins",
-  "sub",
-  "sup",
 ];
 
 export default function Home() {
