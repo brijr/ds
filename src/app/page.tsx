@@ -6,7 +6,7 @@ const elementTypes = ["h1", "h2", "h3", "h4", "h5", "h6", "p", "a"];
 
 export default function Home() {
   return (
-    <main className="p-8 space-y-4">
+    <main className="p-2 space-y-4">
       {elementTypes.map((type) => (
         <Wrapper key={type} as={type as React.ElementType}>
           {text}
@@ -26,9 +26,11 @@ const Wrapper = ({
   const Element = as;
 
   return (
-    <section className="border">
-      <div className="text-sm text-muted border-b p-2">{as as string}</div>
-      <div>
+    <section className="border border-border">
+      <div className="text-sm text-muted-foreground p-2 border-b border-border bg-muted">
+        {as as string}
+      </div>
+      <div className="line-clamp-2 p-2">
         <Element>{children}</Element>
       </div>
     </section>
