@@ -24,11 +24,11 @@
   --text-fluid-3xl: clamp(3.157rem, 2.5rem + 2.5vw, 3.998rem);
   --text-fluid-4xl: clamp(4.209rem, 3rem + 4vw, 5.61rem);
 
-  --body-weight: light;
+  --body-weight: 400;
   --body-leading: 1.4;
   --body-tracking: 0;
 
-  --heading-weight: semibold;
+  --heading-weight: 600;
   --heading-leading: 1.1;
   --heading-tracking: -0.02em;
 
@@ -84,19 +84,12 @@
     letter-spacing: var(--heading-tracking);
   }
 
-  h5 {
+  h5,
+  h6 {
     font-size: var(--text-fluid-base);
     font-weight: var(--heading-weight);
     line-height: var(--heading-leading);
     letter-spacing: var(--heading-tracking);
-  }
-
-  h6 {
-    font-size: var(--text-fluid-sm);
-    font-weight: var(--heading-weight);
-    line-height: var(--heading-leading);
-    letter-spacing: var(--heading-tracking);
-    text-transform: uppercase;
   }
 
   /* Body Text */
@@ -134,6 +127,9 @@
     line-height: var(--body-leading);
     letter-spacing: var(--body-tracking);
     overflow-x: auto;
+    border: 1px solid var(--border);
+    padding: var(--space-base);
+    border-radius: var(--radius);
   }
 
   /* Blockquotes */
@@ -278,34 +274,3 @@
     font-style: italic;
   }
 }
-
-/* ================================
-   Usage Examples:
-
-   Basic usage:
-   <h1 class="text-gray-900">Auto-weighted heading (800)</h1>
-   <h2 class="text-gray-900">Auto-weighted heading (700)</h2>
-   <h3 class="text-gray-900">Auto-weighted heading (600)</h3>
-
-   Override heading weight:
-   <h1 class="heading-medium">Lighter h1 (500)</h1>
-
-   Fluid typography:
-   <h1 class="text-fluid-3xl">Responsive heading</h1>
-   <p class="text-fluid-base">Responsive body text</p>
-
-   Hero section:
-   <h1 class="hero text-gray-900">Big Hero Title</h1>
-   <p class="lead text-gray-600">Supporting lead text</p>
-
-   Article:
-   <article class="article text-gray-800">
-     <h1>Title</h1>
-     <p>Content automatically spaced...</p>
-   </article>
-
-   Gradient:
-   <h1 class="text-fluid-3xl text-gradient bg-gradient-to-r from-blue-600 to-purple-600">
-     Gradient Title
-   </h1>
-   ================================ */
