@@ -5,7 +5,17 @@ import {
   JetBrains_Mono,
   Merriweather,
   Open_Sans,
+  Roboto,
+  Lato,
+  Montserrat,
+  Poppins,
+  Source_Sans_3,
+  Crimson_Text,
+  Libre_Baskerville,
+  Fira_Code,
+  Source_Code_Pro,
 } from "next/font/google";
+
 import "./globals.css";
 import "./styles/typography.css";
 
@@ -41,6 +51,65 @@ const openSans = Open_Sans({
   display: "swap",
 });
 
+const roboto = Roboto({
+  variable: "--font-roboto",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+  display: "swap",
+});
+
+const lato = Lato({
+  variable: "--font-lato",
+  subsets: ["latin"],
+  weight: ["300", "400", "700"],
+  display: "swap",
+});
+
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
+
+const sourceSans = Source_Sans_3({
+  variable: "--font-sourcesans",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const crimsonText = Crimson_Text({
+  variable: "--font-crimson",
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  display: "swap",
+});
+
+const libreBaskerville = Libre_Baskerville({
+  variable: "--font-librebaskerville",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
+
+const firaCode = Fira_Code({
+  variable: "--font-firacode",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const sourceCodePro = Source_Code_Pro({
+  variable: "--font-sourcecodepro",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "ds / brijr",
   description: "a design system by brijr",
@@ -54,7 +123,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${playfair.variable} ${jetbrainsMono.variable} ${merriweather.variable} ${openSans.variable} antialiased`}
+        className={`${inter.variable} ${playfair.variable} ${jetbrainsMono.variable} ${merriweather.variable} ${openSans.variable} ${roboto.variable} ${lato.variable} ${montserrat.variable} ${poppins.variable} ${sourceSans.variable} ${crimsonText.variable} ${libreBaskerville.variable} ${firaCode.variable} ${sourceCodePro.variable} antialiased`}
       >
         {children}
       </body>

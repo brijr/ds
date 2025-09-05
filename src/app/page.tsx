@@ -28,11 +28,25 @@ interface FontSelectorProps {
 const DEFAULT_DEMO_TEXT = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. `;
 
 const FONT_OPTIONS: FontFamily[] = [
+  // Sans-serif fonts
   { name: "Inter", value: "Inter" },
   { name: "Open Sans", value: "Open Sans" },
+  { name: "Roboto", value: "Roboto" },
+  { name: "Lato", value: "Lato" },
+  { name: "Montserrat", value: "Montserrat" },
+  { name: "Poppins", value: "Poppins" },
+  { name: "Source Sans 3", value: "Source Sans 3" },
+
+  // Serif fonts
   { name: "Merriweather", value: "Merriweather" },
   { name: "Playfair Display", value: "Playfair Display" },
+  { name: "Crimson Text", value: "Crimson Text" },
+  { name: "Libre Baskerville", value: "Libre Baskerville" },
+
+  // Monospace fonts
   { name: "JetBrains Mono", value: "JetBrains Mono" },
+  { name: "Fira Code", value: "Fira Code" },
+  { name: "Source Code Pro", value: "Source Code Pro" },
 ];
 
 const TYPOGRAPHY_ELEMENTS: React.ElementType[] = [
