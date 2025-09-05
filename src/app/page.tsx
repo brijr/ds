@@ -29,10 +29,10 @@ export default function Home() {
 
   return (
     <main className="divide-y divide-border">
-      <div className="grid gap-1 p-4">
+      <div className="grid gap-1 p-4 bg-muted">
         <label className="text-sm text-muted-foreground">Demo Text</label>
         <input
-          className="w-full border border-border p-2 bg-muted"
+          className="w-full border border-border p-2 bg-background rounded"
           type="text"
           value={demoText}
           onChange={(e) => setDemoText(e.target.value)}
