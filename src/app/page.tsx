@@ -28,26 +28,11 @@ interface FontSelectorProps {
 const DEFAULT_DEMO_TEXT = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. `;
 
 const FONT_OPTIONS: FontFamily[] = [
-  {
-    name: "Inter (Sans)",
-    value: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
-  },
-  {
-    name: "System Sans",
-    value: "system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
-  },
-  {
-    name: "Georgia (Serif)",
-    value: 'Georgia, Cambria, "Times New Roman", Times, serif',
-  },
-  { name: "Times (Serif)", value: '"Times New Roman", Times, serif' },
-  {
-    name: "SF Mono",
-    value: '"SF Mono", Monaco, Consolas, "Courier New", monospace',
-  },
-  { name: "Courier (Mono)", value: '"Courier New", Courier, monospace' },
-  { name: "Arial", value: "Arial, Helvetica, sans-serif" },
-  { name: "Helvetica", value: "Helvetica, Arial, sans-serif" },
+  { name: "Inter", value: "Inter" },
+  { name: "Open Sans", value: "Open Sans" },
+  { name: "Merriweather", value: "Merriweather" },
+  { name: "Playfair Display", value: "Playfair Display" },
+  { name: "JetBrains Mono", value: "JetBrains Mono" },
 ];
 
 const TYPOGRAPHY_ELEMENTS: React.ElementType[] = [
@@ -173,17 +158,13 @@ export default function Home() {
 
   // Update CSS custom properties when fonts change
   useEffect(() => {
-    const updateFontVariables = () => {
-      const root = document.documentElement;
+    const root = document.documentElement;
 
-      // Update heading font for h1-h6
-      root.style.setProperty("--font-heading", headingFont);
+    // Set the font families directly
+    root.style.setProperty("--font-heading", headingFont);
+    root.style.setProperty("--font-body", bodyFont);
 
-      // Update body font for p, body, and other text elements
-      root.style.setProperty("--font-body", bodyFont);
-    };
-
-    updateFontVariables();
+    console.log("Set fonts:", { headingFont, bodyFont });
   }, [headingFont, bodyFont]);
 
   return (
@@ -200,30 +181,6 @@ export default function Home() {
         bodyFont={bodyFont}
         setBodyFont={setBodyFont}
       />
-
-      {/* Dynamic styles */}
-      <style jsx global>{`
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-          font-family: var(--font-heading, var(--font-sans)) !important;
-        }
-
-        p,
-        body,
-        blockquote,
-        small {
-          font-family: var(--font-body, var(--font-sans)) !important;
-        }
-
-        code,
-        pre {
-          font-family: var(--font-mono) !important;
-        }
-      `}</style>
     </>
   );
 }

@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: Inter, system-ui, -apple-system, sans-serif;
-  --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-mono: "SF Mono", Monaco, Consolas, "Courier New", monospace;
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-merriweather);
+  --font-mono: var(--font-jetbrains);
 
   --text-xs: 0.563rem; /* 9px */
   --text-sm: 0.75rem; /* 12px */
@@ -49,13 +49,14 @@
   }
 
   body {
-    font-family: var(--font-sans);
+    font-family: var(--font-body, var(--font-sans));
     font-weight: var(--body-weight);
     line-height: var(--body-leading);
     letter-spacing: var(--body-tracking);
   }
 
   h1 {
+    font-family: var(--font-heading, var(--font-sans));
     font-size: var(--text-fluid-3xl);
     font-weight: var(--heading-weight);
     line-height: var(--heading-leading);
@@ -63,6 +64,7 @@
   }
 
   h2 {
+    font-family: var(--font-heading, var(--font-sans));
     font-size: var(--text-fluid-2xl);
     font-weight: var(--heading-weight);
     line-height: var(--heading-leading);
@@ -70,6 +72,7 @@
   }
 
   h3 {
+    font-family: var(--font-heading, var(--font-sans));
     font-size: var(--text-fluid-xl);
     font-weight: var(--heading-weight);
     line-height: var(--heading-leading);
@@ -77,6 +80,7 @@
   }
 
   h4 {
+    font-family: var(--font-heading, var(--font-sans));
     font-size: var(--text-fluid-lg);
     font-weight: var(--heading-weight);
     line-height: var(--heading-leading);
@@ -85,6 +89,7 @@
 
   h5,
   h6 {
+    font-family: var(--font-heading, var(--font-sans));
     font-size: var(--text-fluid-base);
     font-weight: var(--heading-weight);
     line-height: var(--body-leading);
@@ -93,6 +98,7 @@
 
   /* Body Text */
   p {
+    font-family: var(--font-body, var(--font-sans));
     font-weight: var(--body-weight);
     line-height: var(--body-leading);
     letter-spacing: var(--body-tracking);
@@ -100,6 +106,7 @@
 
   /* Links */
   a {
+    font-family: var(--font-body, var(--font-sans));
     text-decoration: underline;
     text-underline-offset: 0.125em;
     color: var(--primary);
@@ -108,6 +115,7 @@
   /* Lists */
   ul,
   ol {
+    font-family: var(--font-body, var(--font-sans));
     font-weight: var(--body-weight);
     line-height: var(--body-leading);
     letter-spacing: var(--body-tracking);
@@ -134,12 +142,21 @@
 
   /* Blockquotes */
   blockquote {
+    font-family: var(--font-body, var(--font-sans));
     font-size: var(--text-lg);
     font-weight: var(--body-weight);
     line-height: var(--body-leading);
     letter-spacing: var(--body-tracking);
     padding-left: var(--space-base);
     border-left-width: 0.125rem;
+  }
+
+  /* Text elements */
+  small,
+  em,
+  strong,
+  mark {
+    font-family: var(--font-body, var(--font-sans));
   }
 }
 
