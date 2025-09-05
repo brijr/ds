@@ -119,7 +119,7 @@ const ControlPanel = ({
   bodyFont: string;
   setBodyFont: (font: string) => void;
 }) => (
-  <div className="p-4 bg-muted">
+  <div className="fixed bottom-0 left-0 right-0 p-4 bg-muted border-t border-border backdrop-blur-sm bg-muted/95 z-50">
     <div className="max-w-4xl mx-auto grid gap-2 md:grid-cols-3">
       <TextInput value={demoText} onChange={setDemoText} />
       <FontSelector
@@ -187,7 +187,11 @@ export default function Home() {
   }, [headingFont, bodyFont]);
 
   return (
-    <main className="divide-y divide-border">
+    <>
+      <main className="pb-32">
+        <TypographyDemo text={demoText} />
+      </main>
+
       <ControlPanel
         demoText={demoText}
         setDemoText={setDemoText}
@@ -196,7 +200,6 @@ export default function Home() {
         bodyFont={bodyFont}
         setBodyFont={setBodyFont}
       />
-      <TypographyDemo text={demoText} />
 
       {/* Dynamic styles */}
       <style jsx global>{`
@@ -221,6 +224,6 @@ export default function Home() {
           font-family: var(--font-mono) !important;
         }
       `}</style>
-    </main>
+    </>
   );
 }
