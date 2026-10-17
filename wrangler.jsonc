@@ -1,0 +1,13 @@
+{
+  // Static site for ds.brijr.dev. Deploy with: npx wrangler deploy
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "brijr-ds",
+  "account_id": "4976e8a5df6887f41b287a83e6b5c18f", // WIP
+  "compatibility_date": "2026-10-17",
+  "assets": {
+    "directory": ".",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [{ "pattern": "ds.brijr.dev", "custom_domain": true }]
+}
