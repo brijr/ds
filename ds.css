@@ -82,7 +82,10 @@
  *
  * 6. Text classes: .ds-muted .ds-primary .ds-medium .ds-small .ds-label
  *    .ds-link .ds-truncate .ds-sr-only. Headings balance their lines and
- *    paragraphs avoid a lone last word automatically.
+ *    paragraphs avoid a lone last word automatically. Use .ds-link for
+ *    links in running text outside .ds-prose (inside it, links are styled
+ *    already); add .ds-muted for a quiet gray link. Leave names, nav, and
+ *    whole-block links as plain <a>.
  *
  * 7. 4px grid. All vertical spacing, line heights, and fixed sizes are
  *    multiples of 4px, so every block starts on a 4px line. Widths that
@@ -280,6 +283,10 @@
     outline: 2px solid var(--ds-foreground);
     outline-offset: 2px;
   }
+  /* Rounded focus ring around text links */
+  a:focus-visible {
+    border-radius: 2px;
+  }
 }
 
 /* ── 3. Layout ─────────────────────────────────────────────────────────── */
@@ -465,19 +472,7 @@
   :where(.ds-prose) :where(sub) {
     inset-block-start: 0.25em;
   }
-  :where(.ds-prose) :where(a) {
-    color: var(--ds-primary);
-    text-decoration: underline;
-    text-decoration-color: color-mix(in oklab, currentColor 50%, transparent);
-    text-underline-offset: 0.1em;
-  }
-  :where(.ds-prose) :where(a):hover {
-    text-decoration-color: currentColor;
-  }
-  :where(.ds-prose) :where(h1, h2, h3, h4, h5, h6) :where(a) {
-    color: inherit;
-    text-decoration: none;
-  }
+  /* Links inside prose are styled with .ds-link in the text layer. */
 
   /* Lists */
   :where(.ds-prose) :where(li + li) {
@@ -630,14 +625,27 @@
     font-weight: var(--ds-weight-medium);
   }
 
-  .ds-link {
+  /*
+   * Links: .ds-link anywhere, and every link inside .ds-prose. A 1px
+   * underline sits just under the text in a half-strength tint of the link
+   * color, and darkens to full on hover. Zero specificity, so .ds-muted on
+   * a link gives a quiet gray link with a matching underline.
+   */
+  :where(.ds-link, .ds-prose a) {
     color: var(--ds-primary);
-    text-decoration: underline;
+    text-decoration-line: underline;
+    text-decoration-thickness: var(--ds-hairline);
     text-decoration-color: color-mix(in oklab, currentColor 50%, transparent);
     text-underline-offset: 0.1em;
+    transition: text-decoration-color 150ms ease;
   }
-  .ds-link:hover {
+  :where(.ds-link, .ds-prose a):hover {
     text-decoration-color: currentColor;
+  }
+  /* A link in a prose heading looks like the heading */
+  :where(.ds-prose) :where(h1, h2, h3, h4, h5, h6) :where(a:not(.ds-link)) {
+    color: inherit;
+    text-decoration-line: none;
   }
 
   .ds-truncate {
