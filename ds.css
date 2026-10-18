@@ -41,17 +41,19 @@
  *              <div class="ds-masthead">
  *                <a class="ds-primary" href="/">Name</a>
  *                <span class="ds-muted">Role</span>
- *                <h1 class="ds-crumb"><span class="ds-muted">/</span><a href="/work">Work</a></h1>
  *              </div>
  *            </div>
  *          </header>
  *          <section class="ds-section">
- *            <div class="ds-container"> …blocks… </div>
+ *            <div class="ds-container">
+ *              <h1>Page title</h1>
+ *              …blocks…
+ *            </div>
  *          </section>
  *        </main>
  *      </body>
  *
- *    Leave out .ds-crumb on the home page.
+ *    Each page has one <h1>, at the start of its first section.
  *
  * 5. Blocks. Spacing is automatic:
  *      .ds-container  page blocks, 32px apart
@@ -396,21 +398,11 @@
     min-inline-size: 60%;
   }
 
-  /* Page header: name at the start, role at the end, crumb below */
+  /* Page header: name at the start, role at the end */
   .ds-masthead {
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: start;
-    gap: var(--ds-space-2);
-  }
-
-  .ds-masthead > .ds-crumb {
-    grid-column: 1 / -1;
-  }
-
-  .ds-crumb {
-    display: flex;
-    align-items: center;
     gap: var(--ds-space-2);
   }
 }
