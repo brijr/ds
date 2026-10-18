@@ -26,8 +26,7 @@
  *
  * 2. Line spacing follows the element, so never set it yourself:
  *      single lines (names, links, labels, headings)   20px
- *      <p> paragraphs                                    24px
- *      everything inside .ds-prose                       28px
+ *      <p> paragraphs, and everything inside .ds-prose   24px
  *
  * 3. One width. Every page uses .ds-container: 512px of content (about
  *    70 characters per line), centered. Headers, grids, and text share its
@@ -122,7 +121,7 @@
 
     /*
      * 4px grid. Every size that takes up space is a multiple of 4px. Line
-     * heights are fixed lengths, not ratios, so lines are 16–28px tall.
+     * heights are fixed lengths, not ratios, so lines are 16–24px tall.
      */
     --ds-text-base: 1rem; /* 16px — nearly everything */
     --ds-text-sm: 0.875rem; /* 14px — dates, meta */
@@ -130,8 +129,7 @@
 
     --ds-leading-xs: 1rem; /* 16px — 12px labels */
     --ds-leading-tight: 1.25rem; /* 20px — single lines, 14px text */
-    --ds-leading-normal: 1.5rem; /* 24px — paragraphs */
-    --ds-leading-prose: 1.75rem; /* 28px — long-form reading */
+    --ds-leading-normal: 1.5rem; /* 24px — paragraphs, prose */
     --ds-tracking-tight: -0.025em; /* headings in prose */
 
     --ds-weight-medium: 500;
@@ -428,7 +426,7 @@
   .ds-prose {
     min-width: 0;
     max-width: var(--ds-prose);
-    line-height: var(--ds-leading-prose);
+    line-height: var(--ds-leading-normal);
   }
 
   /* Flow: 16px between blocks */
@@ -463,7 +461,6 @@
 
   /* Inline text */
   :where(.ds-prose) :where(p) {
-    line-height: var(--ds-leading-prose);
     overflow-wrap: break-word;
   }
   :where(.ds-prose) :where(strong, b) {
@@ -500,12 +497,12 @@
     position: relative;
     padding-inline-start: var(--ds-space-6);
   }
-  /* 4px dot, centered on the first 28px line */
+  /* 4px dot, centered on the first 24px line */
   :where(.ds-prose) :where(ul > li)::before {
     content: "";
     position: absolute;
     inset-inline-start: var(--ds-space-2);
-    inset-block-start: var(--ds-space-3);
+    inset-block-start: calc((var(--ds-leading-normal) - var(--ds-space-1)) / 2);
     width: var(--ds-space-1);
     height: var(--ds-space-1);
     border-radius: 50%;
@@ -564,7 +561,7 @@
     line-height: inherit;
   }
 
-  /* Tables: each row is 8 + 28 + 7 + 1 (hairline) = 44px. Separate borders,
+  /* Tables: each row is 8 + 24 + 7 + 1 (hairline) = 40px. Separate borders,
      because collapsed borders split into half pixels. */
   :where(.ds-prose) :where(table) {
     width: 100%;
