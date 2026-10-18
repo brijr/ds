@@ -5,51 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Demo — ds.css</title>
     <link rel="stylesheet" href="../ds.css" />
-    <style>
-      /* Demo-only helpers. Not part of ds.css. */
-      .demo-name {
-        color: var(--ds-muted-foreground);
-        font-family: var(--ds-font-mono);
-        font-size: var(--ds-text-sm);
-        line-height: var(--ds-leading-tight);
-      }
-      .demo-bar {
-        height: var(--ds-space-2);
-        background: var(--ds-primary);
-        border-radius: 1px;
-      }
-      .demo-swatch {
-        width: var(--ds-space-4);
-        height: var(--ds-space-4);
-        border-radius: 50%;
-        box-shadow: inset 0 0 0 var(--ds-hairline) var(--ds-border);
-        background: var(--c);
-      }
-      .demo-key {
-        display: flex;
-        align-items: center;
-        gap: var(--ds-space-2);
-      }
-      .demo-cell {
-        padding: var(--ds-space-2) var(--ds-space-3);
-        border-radius: var(--ds-radius);
-        background: var(--ds-muted);
-        font-size: var(--ds-text-sm);
-        line-height: var(--ds-leading-tight);
-      }
-      .demo-outline {
-        outline: var(--ds-hairline) dashed var(--ds-border);
-        outline-offset: calc(-1 * var(--ds-hairline));
-      }
-      .demo-theme button {
-        background: none;
-        cursor: pointer;
-      }
-      .demo-theme button[aria-pressed="true"] {
-        color: var(--ds-foreground);
-        text-decoration: none;
-      }
-    </style>
   </head>
   <body>
     <main class="ds-main">
@@ -66,80 +21,74 @@
       <section class="ds-section">
         <div class="ds-container">
           <div class="ds-stack">
-            <p>Everything ds.css styles. Each class has one behavior; spacing, line height, and columns adapt to the content and the space around it. Gray monospace text names the class or token.</p>
-            <div class="ds-cluster demo-theme" role="group" aria-label="Theme">
-              <span class="ds-muted">Theme</span>
-              <button class="ds-link" type="button" data-set="">System</button>
-              <button class="ds-link" type="button" data-set="light">Light</button>
-              <button class="ds-link" type="button" data-set="dark">Dark</button>
-            </div>
+            <p>Everything ds.css styles, with nothing added. Each class has one behavior; spacing, line height, and columns adapt to the content and the space around it. Small gray text names the class or token.</p>
           </div>
 
           <!-- ── Type ──────────────────────────────────────────────── -->
 
           <div class="ds-stack">
             <h2 class="ds-label">Text sizes</h2>
-            <div class="ds-row"><span>Body, 16px on 20px</span><span class="demo-name">default</span></div>
-            <div class="ds-row"><span class="ds-small">Dates and meta, 14px on 20px</span><span class="demo-name">.ds-small</span></div>
-            <div class="ds-row"><span class="ds-label">Group label, 12px on 16px</span><span class="demo-name">.ds-label</span></div>
+            <div class="ds-row"><span>Body, 16px on 20px</span><span class="ds-small ds-muted">default</span></div>
+            <div class="ds-row"><span class="ds-small">Dates and meta, 14px on 20px</span><span class="ds-small ds-muted">.ds-small</span></div>
+            <div class="ds-row"><span class="ds-label">Group label, 12px on 16px</span><span class="ds-small ds-muted">.ds-label</span></div>
           </div>
 
           <div class="ds-stack">
             <h2 class="ds-label">Line spacing follows the element</h2>
             <div class="ds-stack">
-              <span class="demo-name">a single line · 20px</span>
-              <span class="demo-outline">Names, links, labels, and headings sit on tight lines because they rarely wrap. If one does, it looks like this.</span>
+              <span class="ds-small ds-muted">a single line · 20px</span>
+              <span>Names, links, labels, and headings sit on tight lines because they rarely wrap. If one does, it looks like this.</span>
             </div>
             <div class="ds-stack">
-              <span class="demo-name">&lt;p&gt; · 24px</span>
-              <p class="demo-outline">Any paragraph gets more room between lines, because paragraphs wrap. There is enough space for the eye to find the next line.</p>
+              <span class="ds-small ds-muted">&lt;p&gt; · 24px</span>
+              <p>Any paragraph gets more room between lines, because paragraphs wrap. There is enough space for the eye to find the next line.</p>
             </div>
             <div class="ds-stack">
-              <span class="demo-name">inside .ds-prose · 28px</span>
-              <div class="ds-prose"><p class="demo-outline">Articles get the most open lines, so long writing stays comfortable to read for several minutes at a time.</p></div>
+              <span class="ds-small ds-muted">inside .ds-prose · 28px</span>
+              <div class="ds-prose"><p>Articles get the most open lines, so long writing stays comfortable to read for several minutes at a time.</p></div>
             </div>
           </div>
 
           <div class="ds-stack">
             <h2 class="ds-label">Text classes</h2>
-            <div class="ds-row"><span class="ds-muted">Secondary text</span><span class="demo-name">.ds-muted</span></div>
-            <div class="ds-row"><span class="ds-primary">Accent text</span><span class="demo-name">.ds-primary</span></div>
-            <div class="ds-row"><span class="ds-medium">Medium weight</span><span class="demo-name">.ds-medium</span></div>
-            <div class="ds-row"><a class="ds-link" href="#">A link with an underline</a><span class="demo-name">.ds-link</span></div>
-            <div class="ds-row"><a class="ds-link ds-muted" href="#">A quiet link</a><span class="demo-name">.ds-link.ds-muted</span></div>
-            <div class="ds-row"><span class="ds-truncate">A long title that is cut off with an ellipsis when it runs out of room on the line</span><span class="demo-name">.ds-truncate</span></div>
-            <div class="ds-row"><span>Screen-reader text is hidden here<span class="ds-sr-only"> (hidden)</span></span><span class="demo-name">.ds-sr-only</span></div>
+            <div class="ds-row"><span class="ds-muted">Secondary text</span><span class="ds-small ds-muted">.ds-muted</span></div>
+            <div class="ds-row"><span class="ds-primary">Accent text</span><span class="ds-small ds-muted">.ds-primary</span></div>
+            <div class="ds-row"><span class="ds-medium">Medium weight</span><span class="ds-small ds-muted">.ds-medium</span></div>
+            <div class="ds-row"><a class="ds-link" href="#">A link with an underline</a><span class="ds-small ds-muted">.ds-link</span></div>
+            <div class="ds-row"><a class="ds-link ds-muted" href="#">A quiet link</a><span class="ds-small ds-muted">.ds-link.ds-muted</span></div>
+            <div class="ds-row"><span class="ds-truncate">A long title that is cut off with an ellipsis when it runs out of room on the line</span><span class="ds-small ds-muted">.ds-truncate</span></div>
+            <div class="ds-row"><span>Screen-reader text is hidden here<span class="ds-sr-only"> (hidden)</span></span><span class="ds-small ds-muted">.ds-sr-only</span></div>
           </div>
 
           <!-- ── Tokens ─────────────────────────────────────────────── -->
 
           <div class="ds-stack">
             <h2 class="ds-label">Space (4px grid)</h2>
-            <div class="ds-row"><span class="demo-name">--ds-space-1 · 4</span><div class="demo-bar" style="width: var(--ds-space-1)"></div></div>
-            <div class="ds-row"><span class="demo-name">--ds-space-2 · 8</span><div class="demo-bar" style="width: var(--ds-space-2)"></div></div>
-            <div class="ds-row"><span class="demo-name">--ds-space-3 · 12</span><div class="demo-bar" style="width: var(--ds-space-3)"></div></div>
-            <div class="ds-row"><span class="demo-name">--ds-space-4 · 16</span><div class="demo-bar" style="width: var(--ds-space-4)"></div></div>
-            <div class="ds-row"><span class="demo-name">--ds-space-6 · 24</span><div class="demo-bar" style="width: var(--ds-space-6)"></div></div>
-            <div class="ds-row"><span class="demo-name">--ds-space-8 · 32</span><div class="demo-bar" style="width: var(--ds-space-8)"></div></div>
-            <div class="ds-row"><span class="demo-name">--ds-space-12 · 48</span><div class="demo-bar" style="width: var(--ds-space-12)"></div></div>
-            <div class="ds-row"><span class="demo-name">--ds-space-18 · 72</span><div class="demo-bar" style="width: var(--ds-space-18)"></div></div>
+            <div class="ds-row"><span>--ds-space-1</span><span class="ds-small ds-muted">4px</span></div>
+            <div class="ds-row"><span>--ds-space-2</span><span class="ds-small ds-muted">8px</span></div>
+            <div class="ds-row"><span>--ds-space-3</span><span class="ds-small ds-muted">12px</span></div>
+            <div class="ds-row"><span>--ds-space-4</span><span class="ds-small ds-muted">16px</span></div>
+            <div class="ds-row"><span>--ds-space-6</span><span class="ds-small ds-muted">24px</span></div>
+            <div class="ds-row"><span>--ds-space-8</span><span class="ds-small ds-muted">32px</span></div>
+            <div class="ds-row"><span>--ds-space-12</span><span class="ds-small ds-muted">48px</span></div>
+            <div class="ds-row"><span>--ds-space-18</span><span class="ds-small ds-muted">72px</span></div>
           </div>
 
           <div class="ds-stack">
             <h2 class="ds-label">Colors</h2>
-            <div class="ds-row"><span class="demo-key"><span class="demo-swatch" style="--c: var(--ds-background)"></span>Background</span><span class="demo-name">--ds-background</span></div>
-            <div class="ds-row"><span class="demo-key"><span class="demo-swatch" style="--c: var(--ds-foreground)"></span>Foreground</span><span class="demo-name">--ds-foreground</span></div>
-            <div class="ds-row"><span class="demo-key"><span class="demo-swatch" style="--c: var(--ds-muted)"></span>Muted</span><span class="demo-name">--ds-muted</span></div>
-            <div class="ds-row"><span class="demo-key"><span class="demo-swatch" style="--c: var(--ds-muted-foreground)"></span>Muted text</span><span class="demo-name">--ds-muted-foreground</span></div>
-            <div class="ds-row"><span class="demo-key"><span class="demo-swatch" style="--c: var(--ds-border)"></span>Border</span><span class="demo-name">--ds-border</span></div>
-            <div class="ds-row"><span class="demo-key"><span class="demo-swatch" style="--c: var(--ds-primary)"></span>Primary</span><span class="demo-name">--ds-primary</span></div>
+            <div class="ds-row"><span>Background</span><span class="ds-small ds-muted">--ds-background</span></div>
+            <div class="ds-row"><span>Foreground</span><span class="ds-small ds-muted">--ds-foreground</span></div>
+            <div class="ds-row"><span>Muted</span><span class="ds-small ds-muted">--ds-muted</span></div>
+            <div class="ds-row"><span class="ds-muted">Muted text</span><span class="ds-small ds-muted">--ds-muted-foreground</span></div>
+            <div class="ds-row"><span>Border</span><span class="ds-small ds-muted">--ds-border</span></div>
+            <div class="ds-row"><span>Primary</span><span class="ds-small ds-muted">--ds-primary</span></div>
           </div>
 
           <!-- ── Layout ─────────────────────────────────────────────── -->
 
           <div class="ds-stack">
             <h2 class="ds-label">Masthead and crumb</h2>
-            <div class="ds-masthead demo-outline">
+            <div class="ds-masthead">
               <a class="ds-primary" href="#">Site name</a>
               <span class="ds-muted">Role</span>
               <div class="ds-crumb"><span class="ds-muted">/</span><a href="#">Section</a></div>
@@ -149,16 +98,16 @@
           <div class="ds-stack">
             <h2 class="ds-label">Stack spacing adapts</h2>
             <div class="ds-stack">
-              <span class="demo-name">.ds-stack of items · 12px</span>
-              <div class="ds-stack demo-outline"><p>First item</p><p>Second item</p><p>Third item</p></div>
+              <span class="ds-small ds-muted">.ds-stack of items · 12px</span>
+              <div class="ds-stack"><p>First item</p><p>Second item</p><p>Third item</p></div>
             </div>
             <div class="ds-stack">
-              <span class="demo-name">.ds-stack led by a .ds-label · 8px under the label</span>
-              <div class="ds-stack demo-outline"><span class="ds-label">Label</span><p>First item</p><p>Second item</p></div>
+              <span class="ds-small ds-muted">.ds-stack led by a .ds-label · 8px under the label</span>
+              <div class="ds-stack"><span class="ds-label">Label</span><p>First item</p><p>Second item</p></div>
             </div>
             <div class="ds-stack">
-              <span class="demo-name">.ds-stack of groups · 24px</span>
-              <div class="ds-stack demo-outline">
+              <span class="ds-small ds-muted">.ds-stack of groups · 24px</span>
+              <div class="ds-stack">
                 <div class="ds-stack"><span class="ds-medium">Group one</span><p class="ds-muted">Items inside a group stay 12px apart.</p></div>
                 <div class="ds-stack"><span class="ds-medium">Group two</span><p class="ds-muted">Groups are 24px apart, so they read as separate.</p></div>
               </div>
@@ -168,18 +117,18 @@
           <div class="ds-stack">
             <h2 class="ds-label">Row and cluster</h2>
             <div class="ds-stack">
-              <span class="demo-name">.ds-row · title gives way, date stays whole</span>
-              <div class="ds-row demo-outline"><span class="ds-truncate">Mac for Web Development, a longer title to show how it gives way</span><span class="ds-small ds-muted">October 4, 2026</span></div>
+              <span class="ds-small ds-muted">.ds-row · title gives way, date stays whole</span>
+              <div class="ds-row"><span class="ds-truncate">Mac for Web Development, a longer title to show how it gives way</span><span class="ds-small ds-muted">October 4, 2026</span></div>
             </div>
             <div class="ds-stack">
-              <span class="demo-name">.ds-cluster · wraps</span>
-              <div class="ds-cluster demo-outline"><a class="ds-link" href="#">Work</a><a class="ds-link" href="#">Posts</a><a class="ds-link" href="#">About</a><a class="ds-link" href="#">Contact</a><a class="ds-link" href="#">GitHub</a><a class="ds-link" href="#">YouTube</a><a class="ds-link" href="#">LinkedIn</a></div>
+              <span class="ds-small ds-muted">.ds-cluster · wraps</span>
+              <div class="ds-cluster"><a class="ds-link" href="#">Work</a><a class="ds-link" href="#">Posts</a><a class="ds-link" href="#">About</a><a class="ds-link" href="#">Contact</a><a class="ds-link" href="#">GitHub</a><a class="ds-link" href="#">YouTube</a><a class="ds-link" href="#">LinkedIn</a></div>
             </div>
           </div>
 
           <div class="ds-stack">
             <h2 class="ds-label">Aside</h2>
-            <span class="demo-name">.ds-aside · beside when there's room, stacked when not</span>
+            <span class="ds-small ds-muted">.ds-aside · beside when there's room, stacked when not</span>
             <div class="ds-aside">
               <span class="ds-small ds-muted">2026</span>
               <div class="ds-stack"><a class="ds-link" href="#">Supermetal</a><p class="ds-muted">Designed and built the marketing site and docs for a data replication platform.</p></div>
@@ -196,12 +145,12 @@
 
           <div class="ds-stack">
             <h2 class="ds-label">Grid</h2>
-            <span class="demo-name">.ds-grid · two equal columns, one on phones</span>
+            <span class="ds-small ds-muted">.ds-grid · two equal columns, one on phones</span>
             <div class="ds-grid">
-              <div class="demo-cell">Item 1</div>
-              <div class="demo-cell">Item 2</div>
-              <div class="demo-cell">Item 3</div>
-              <div class="demo-cell">Item 4</div>
+              <div class="ds-stack"><a href="#">Work</a><p class="ds-muted">Sites and products, newest first.</p></div>
+              <div class="ds-stack"><a href="#">Posts</a><p class="ds-muted">Notes on design and building.</p></div>
+              <div class="ds-stack"><a href="#">About</a><p class="ds-muted">Who I am and what I do.</p></div>
+              <div class="ds-stack"><a href="#">Contact</a><p class="ds-muted">Email and elsewhere.</p></div>
             </div>
           </div>
 
@@ -209,7 +158,7 @@
 
           <div class="ds-stack">
             <h2 class="ds-label">Prose</h2>
-            <span class="demo-name">.ds-prose · every element markdown can produce</span>
+            <span class="ds-small ds-muted">.ds-prose · every element markdown can produce</span>
           </div>
 
           <article class="ds-prose">
@@ -290,7 +239,7 @@
 
             <h2>Media</h2>
             <figure>
-              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1024' height='576'%3E%3Crect width='100%25' height='100%25' fill='%23d6d3d1'/%3E%3Ccircle cx='760' cy='170' r='72' fill='%23f5f5f4'/%3E%3Cpath d='M0 576 L300 300 L520 470 L720 330 L1024 576Z' fill='%23a8a29e'/%3E%3C/svg%3E" width="1024" height="576" alt="Placeholder landscape" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1024' height='576'%3E%3Crect width='100%25' height='100%25' fill='%23d4d4d4'/%3E%3Ccircle cx='760' cy='170' r='72' fill='%23f5f5f5'/%3E%3Cpath d='M0 576 L300 300 L520 470 L720 330 L1024 576Z' fill='%23a3a3a3'/%3E%3C/svg%3E" width="1024" height="576" alt="Placeholder landscape" />
               <figcaption>A figure caption sits 8px under its image, in small muted text.</figcaption>
             </figure>
             <p>A divider follows. It has 32px above and below.</p>
@@ -306,29 +255,18 @@
 
           <div class="ds-stack">
             <h2 class="ds-label">Headings outside prose</h2>
-            <span class="demo-name">h1–h6 look like body text; use them for meaning</span>
+            <span class="ds-small ds-muted">h1–h6 look like body text; use them for meaning</span>
             <h3>Heading one through six all look like this</h3>
           </div>
 
           <div class="ds-stack">
             <h2 class="ds-label">Focus</h2>
-            <span class="demo-name">:focus-visible · press Tab to see the outline</span>
+            <span class="ds-small ds-muted">:focus-visible · press Tab to see the outline</span>
             <div class="ds-cluster"><a class="ds-link" href="#">First link</a><a class="ds-link" href="#">Second link</a></div>
           </div>
         </div>
       </section>
     </main>
 
-    <script>
-      const root = document.documentElement;
-      const buttons = document.querySelectorAll("[data-set]");
-      function apply(theme) {
-        if (theme) root.dataset.theme = theme;
-        else delete root.dataset.theme;
-        buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.set === theme)));
-      }
-      buttons.forEach((b) => b.addEventListener("click", () => apply(b.dataset.set)));
-      apply("");
-    </script>
   </body>
 </html>
