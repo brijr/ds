@@ -95,6 +95,7 @@
  *    --ds-leading-* tokens, and take --ds-hairline out of the padding next
  *    to any border you add. Images are the one vertical exception: they
  *    scale with the column, so their height can land between lines.
+ *    SVG icons and logos inside links or text never change the line height.
  *
  * 8. Color. Neutral grays. Text colors only: --ds-foreground,
  *    --ds-muted-foreground, and --ds-primary for links and the site name
@@ -273,12 +274,20 @@
     }
   }
 
-  /* Images and video fill their box. Inline SVG icons stay inline. */
+  /* Images and video fill their box */
   img,
   video {
     display: block;
     max-width: 100%;
     height: auto;
+  }
+
+  /* An SVG icon or logo inside a link or text sits centered on the text
+     and never makes its line taller. If you make its parent flex or grid,
+     set margin-block: 0 on the SVG. */
+  :where(a, span, p, li, h1, h2, h3, h4, h5, h6, dt, dd, td, th, label, summary) > svg {
+    vertical-align: middle;
+    margin-block: -1em;
   }
 
   ol,
@@ -404,6 +413,11 @@
     grid-template-columns: 1fr auto;
     align-items: start;
     gap: var(--ds-space-2);
+  }
+
+  /* SVGs placed directly in a layout box keep their full height */
+  :where(.ds-row, .ds-cluster, .ds-stack, .ds-grid, .ds-aside, .ds-masthead, .ds-container) > svg {
+    margin-block: 0;
   }
 }
 
