@@ -6,17 +6,6 @@
     <title>brijr/ds — typography, spacing, and layout in one CSS file</title>
     <meta name="description" content="One CSS file for typography, spacing, and layout. Written so an AI agent can use it." />
     <link rel="stylesheet" href="ds.css" />
-    <style>
-      /* Neutral palette: same tokens, pure grays, black/white accent */
-      :root {
-        --ds-background: light-dark(#ffffff, #0a0a0a);
-        --ds-foreground: light-dark(#0a0a0a, #fafafa);
-        --ds-muted: light-dark(#f5f5f5, #262626);
-        --ds-muted-foreground: light-dark(#737373, #a3a3a3);
-        --ds-border: light-dark(#e5e5e5, rgb(255 255 255 / 0.1));
-        --ds-primary: light-dark(#0a0a0a, #fafafa);
-      }
-    </style>
   </head>
   <body>
     <main class="ds-main" id="main">
@@ -63,10 +52,9 @@
             <p>Add the file to any page. There is nothing to install.</p>
             <pre><code>&lt;link rel="stylesheet" href="ds.css"&gt;</code></pre>
             <p>To build with an agent, give it the file and ask it to follow the rules at the top. They spell out the page structure, which class to use for what, and what to avoid.</p>
-            <p>To change the colors, override the variables in <code>:root</code>. This page does that to swap the default orange accent for neutral grays:</p>
+            <p>The colors are neutral grays, with light and dark modes that follow the system. To change one, or to give links an accent color, override its variable in <code>:root</code>:</p>
             <pre><code>:root {
-  --ds-primary: light-dark(#0a0a0a, #fafafa);
-  --ds-muted:   light-dark(#f5f5f5, #262626);
+  --ds-primary: light-dark(#2563eb, #60a5fa);
 }</code></pre>
           </article>
         </div>

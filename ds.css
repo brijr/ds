@@ -95,9 +95,10 @@
  *    to any border you add. Images are the one vertical exception: they
  *    scale with the column, so their height can land between lines.
  *
- * 8. Color. Text colors only: --ds-foreground, --ds-muted-foreground, and
- *    one accent (--ds-primary) for links and the site name. Never write a
- *    raw color; use var(--ds-*). Dark mode follows the OS. Put
+ * 8. Color. Neutral grays. Text colors only: --ds-foreground,
+ *    --ds-muted-foreground, and --ds-primary for links and the site name
+ *    (the same as the text unless you set an accent). Never write a raw
+ *    color; use var(--ds-*). Dark mode follows the OS. Put
  *    data-theme="dark" or data-theme="light" on <html> to force one.
  * ───────────────────────────────────────────────────────────────────────────
  */
@@ -166,12 +167,12 @@
      * fills, bullets) are mixed from these where they're used, so
      * overriding a color on any element updates its tints too.
      */
-    --ds-background: light-dark(#ffffff, #0c0a09);
-    --ds-foreground: light-dark(#0c0a09, #fafaf9);
-    --ds-muted: light-dark(#f5f5f4, #292524); /* code fills */
-    --ds-muted-foreground: light-dark(#79716b, #a6a09b); /* secondary text */
-    --ds-border: light-dark(#e7e5e4, rgb(255 255 255 / 0.1)); /* hairlines */
-    --ds-primary: light-dark(#ff5c00, #ff5c00); /* links, site name */
+    --ds-background: light-dark(#ffffff, #0a0a0a);
+    --ds-foreground: light-dark(#0a0a0a, #fafafa);
+    --ds-muted: light-dark(#f5f5f5, #262626); /* code fills */
+    --ds-muted-foreground: light-dark(#737373, #a3a3a3); /* secondary text */
+    --ds-border: light-dark(#e5e5e5, rgb(255 255 255 / 0.1)); /* hairlines */
+    --ds-primary: light-dark(#0a0a0a, #fafafa); /* links, site name: set an accent here */
 
     color-scheme: light dark;
   }
@@ -190,11 +191,11 @@
   @supports not (color: light-dark(#000, #fff)) {
     :root {
       --ds-background: #ffffff;
-      --ds-foreground: #0c0a09;
-      --ds-muted: #f5f5f4;
-      --ds-muted-foreground: #79716b;
-      --ds-border: #e7e5e4;
-      --ds-primary: #ff5c00;
+      --ds-foreground: #0a0a0a;
+      --ds-muted: #f5f5f5;
+      --ds-muted-foreground: #737373;
+      --ds-border: #e5e5e5;
+      --ds-primary: #0a0a0a;
     }
   }
 
