@@ -87,10 +87,12 @@
  *
  * 6. Text classes: .ds-muted .ds-primary .ds-medium .ds-small .ds-label
  *    .ds-link .ds-truncate .ds-sr-only. Headings balance their lines and
- *    paragraphs avoid a lone last word automatically. Use .ds-link for
- *    links in running text outside .ds-prose (inside it, links are styled
- *    already); add .ds-muted for a quiet gray link. Leave names, nav, and
- *    whole-block links as plain <a>; they fade slightly on hover.
+ *    paragraphs avoid a lone last word automatically; inside .ds-prose,
+ *    so do lists, quotes, and captions, and quote marks hang into the
+ *    margin. Use .ds-link for links in running text outside .ds-prose
+ *    (inside it, links are styled already); add .ds-muted for a quiet
+ *    gray link. Leave names, nav, and whole-block links as plain <a>;
+ *    they fade slightly on hover.
  *
  * 7. 4px grid. The grid comes from the type: 4px is the largest step that
  *    divides every line height (16, 20, 24, 28, 32). All vertical spacing,
@@ -252,6 +254,8 @@
     font-family: var(--ds-font-sans);
     font-size: var(--ds-text-base);
     line-height: var(--ds-leading-tight);
+    /* Always apply the font's kerning (its spacing for letter pairs) */
+    font-kerning: normal;
   }
 
   /* A small scale: h1 24px, h2 20px, h3–h6 body size. Headings split
@@ -461,10 +465,15 @@
 /* follows, so the gap between any two elements is the same everywhere.    */
 
 @layer ds.prose {
+  /* Every block of text, not just <p>, gets even line breaks with no lone
+     last word. Opening and closing quotes hang into the margin so the
+     letters line up (Safari; other browsers ignore it). */
   .ds-prose {
     min-width: 0;
     max-width: var(--ds-prose);
     line-height: var(--ds-leading-normal);
+    text-wrap: pretty;
+    hanging-punctuation: first last;
   }
 
   /* Flow: 16px between blocks */
