@@ -85,7 +85,7 @@
  *    paragraphs avoid a lone last word automatically. Use .ds-link for
  *    links in running text outside .ds-prose (inside it, links are styled
  *    already); add .ds-muted for a quiet gray link. Leave names, nav, and
- *    whole-block links as plain <a>.
+ *    whole-block links as plain <a>; they fade slightly on hover.
  *
  * 7. 4px grid. All vertical spacing, line heights, and fixed sizes are
  *    multiples of 4px, so every block starts on a 4px line. Widths that
@@ -256,6 +256,20 @@
   a {
     color: inherit;
     text-decoration: inherit;
+  }
+
+  /* Plain links (names, nav, whole-block links) fade a little on hover.
+     Text links (.ds-link, links in prose) darken their underline instead. */
+  @media (hover: hover) {
+    :where(a) {
+      transition: opacity 150ms ease;
+    }
+    :where(
+        a:not(.ds-link, .ds-prose a),
+        .ds-prose :is(h1, h2, h3, h4, h5, h6) a:not(.ds-link)
+      ):hover {
+      opacity: 0.6;
+    }
   }
 
   /* Images and video fill their box. Inline SVG icons stay inline. */
@@ -637,7 +651,9 @@
     text-decoration-thickness: var(--ds-hairline);
     text-decoration-color: color-mix(in oklab, currentColor 50%, transparent);
     text-underline-offset: 0.1em;
-    transition: text-decoration-color 150ms ease;
+    transition:
+      text-decoration-color 150ms ease,
+      opacity 150ms ease;
   }
   :where(.ds-link, .ds-prose a):hover {
     text-decoration-color: currentColor;
