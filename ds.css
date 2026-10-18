@@ -2,8 +2,9 @@
  * ds.css — typography, spacing, and layout
  * One file, no build step. Source: bridger.to (look) + craft-ds.com (structure).
  *
- * This file only sets type, space, and page layout. It has no buttons, forms,
- * cards, or other components. Build those on top using the same tokens.
+ * This file sets type, space, and page layout, plus one button and plain
+ * form fields. It has no cards or other components. Build those on top
+ * using the same tokens.
  *
  * Every class has one behavior. There are no size variants to choose from:
  * spacing, line height, and columns adapt to the content and the space
@@ -19,13 +20,16 @@
  * RULES FOR AGENTS — read before writing markup
  * ───────────────────────────────────────────────────────────────────────────
  *
- * 1. One size. All text is 16px except small meta (.ds-small, 14px) and
- *    group labels (.ds-label, 12px). Show hierarchy with color (.ds-muted),
- *    weight (.ds-medium), order, and space, never with bigger text.
- *    Headings (h1–h6) are for meaning; they look like body text.
+ * 1. A small type scale, set by element. h1 is 24px, h2 is 20px, and all
+ *    other text is 16px, except small meta (.ds-small, 14px) and group
+ *    labels (.ds-label, 12px). Never set font sizes yourself. Below h2,
+ *    show hierarchy with color (.ds-muted), weight (.ds-medium), order,
+ *    and space. One h1 per page, h2 for its sections.
  *
  * 2. Line spacing follows the element, so never set it yourself:
- *      single lines (names, links, labels, headings)   20px
+ *      h1                                                32px
+ *      h2                                                28px
+ *      single lines (names, links, labels, h3–h6)        20px
  *      <p> paragraphs, and everything inside .ds-prose   24px
  *
  * 3. One width. Every page uses .ds-container: 512px of content (about
@@ -58,7 +62,7 @@
  * 5. Blocks. Spacing is automatic:
  *      .ds-container  page blocks, 32px apart
  *      .ds-stack      items, 12px apart. 24px apart when the items are
- *                     groups themselves (stacks, asides, grids). A
+ *                     groups themselves (stacks, asides, grids, fields). A
  *                     .ds-label as the first child sits 8px above the rest.
  *      .ds-row        one line, items pushed to both ends (title + date)
  *      .ds-cluster    a wrapping line of items, like links
@@ -88,24 +92,34 @@
  *    already); add .ds-muted for a quiet gray link. Leave names, nav, and
  *    whole-block links as plain <a>; they fade slightly on hover.
  *
- * 7. 4px grid. All vertical spacing, line heights, and fixed sizes are
- *    multiples of 4px, so every block starts on a 4px line. Widths that
- *    stretch with the screen (the column on phones, grid columns) are
- *    fluid and aren't. If you add CSS, use the --ds-space-* and
- *    --ds-leading-* tokens, and take --ds-hairline out of the padding next
- *    to any border you add. Images are the one vertical exception: they
- *    scale with the column, so their height can land between lines.
- *    SVG icons and logos inside links or text never change the line height.
+ * 7. 4px grid. The grid comes from the type: 4px is the largest step that
+ *    divides every line height (16, 20, 24, 28, 32). All vertical spacing,
+ *    line heights, and fixed sizes are multiples of 4px, so every block
+ *    starts on a 4px line. Widths that stretch with the screen (the column
+ *    on phones, grid columns) are fluid and aren't. If you add CSS, use the
+ *    --ds-space-* and --ds-leading-* tokens, and take --ds-hairline out of
+ *    the padding next to any border you add. Two exceptions: images scale
+ *    with the column, so their height can land between lines; and code
+ *    blocks scroll sideways rather than wrap, so where scrollbars take up
+ *    space, a block can too. SVG icons and logos up to 2em tall inside
+ *    links or text never change the line height.
  *
  * 8. Color. Neutral grays. Text colors only: --ds-foreground,
  *    --ds-muted-foreground, and --ds-primary for links and the site name
  *    (the same as the text unless you set an accent). Never write a raw
  *    color; use var(--ds-*). Dark mode follows the OS. Put
  *    data-theme="dark" or data-theme="light" on <html> to force one.
+ *
+ * 9. Buttons and forms. <button> and .ds-button (on a link) are the one
+ *    button: filled, 40px. Give a group one button for its main action and
+ *    make other actions .ds-link beside it, in a .ds-cluster. Wrap each
+ *    field in <label class="ds-field"> with its label text first. A form
+ *    is a .ds-stack of fields, then the button. Checkboxes and radios sit
+ *    inside their label: <label><input type="checkbox"> Remember me</label>
  * ───────────────────────────────────────────────────────────────────────────
  */
 
-@layer ds.base, ds.layout, ds.prose, ds.text;
+@layer ds.base, ds.layout, ds.prose, ds.text, ds.form;
 
 /* ── 1. Tokens ─────────────────────────────────────────────────────────── */
 
@@ -124,12 +138,16 @@
 
     /*
      * 4px grid. Every size that takes up space is a multiple of 4px. Line
-     * heights are fixed lengths, not ratios, so lines are 16–24px tall.
+     * heights are fixed lengths, not ratios, so lines are 16–32px tall.
      */
-    --ds-text-base: 1rem; /* 16px — nearly everything */
+    --ds-text-xl: 1.5rem; /* 24px — h1 */
+    --ds-text-lg: 1.25rem; /* 20px — h2 */
+    --ds-text-base: 1rem; /* 16px — everything else */
     --ds-text-sm: 0.875rem; /* 14px — dates, meta */
     --ds-text-xs: 0.75rem; /* 12px — group labels */
 
+    --ds-leading-xl: 2rem; /* 32px — h1 */
+    --ds-leading-lg: 1.75rem; /* 28px — h2 */
     --ds-leading-xs: 1rem; /* 16px — 12px labels */
     --ds-leading-tight: 1.25rem; /* 20px — single lines, 14px text */
     --ds-leading-normal: 1.5rem; /* 24px — paragraphs, prose */
@@ -156,7 +174,8 @@
     --ds-gutter: var(--ds-space-6); /* 24px between columns */
     --ds-grid-min: 12rem; /* 192px — narrowest grid column */
     --ds-aside-label: 8rem; /* 128px — label column beside content */
-    --ds-radius: 0.25rem; /* 4px — code blocks, images in prose */
+    --ds-radius: 0.25rem; /* 4px — code blocks, images, buttons, fields */
+    --ds-control: 2.5rem; /* 40px — button and field height */
 
     /* Page padding (phones; larger screens below) */
     --ds-main-pad: var(--ds-space-12);
@@ -235,8 +254,8 @@
     line-height: var(--ds-leading-tight);
   }
 
-  /* Headings are for meaning, not size. They look like body text and
-     split their lines evenly. */
+  /* A small scale: h1 24px, h2 20px, h3–h6 body size. Headings split
+     their lines evenly. */
   h1,
   h2,
   h3,
@@ -246,6 +265,19 @@
     font-size: inherit;
     font-weight: inherit;
     text-wrap: balance;
+  }
+  h1,
+  h2 {
+    font-weight: var(--ds-weight-medium);
+    letter-spacing: var(--ds-tracking-tight);
+  }
+  h1 {
+    font-size: var(--ds-text-xl);
+    line-height: var(--ds-leading-xl);
+  }
+  h2 {
+    font-size: var(--ds-text-lg);
+    line-height: var(--ds-leading-lg);
   }
 
   /* Paragraphs wrap, so they get reading line spacing and avoid a lone
@@ -282,9 +314,9 @@
     height: auto;
   }
 
-  /* An SVG icon or logo inside a link or text sits centered on the text
-     and never makes its line taller. If you make its parent flex or grid,
-     set margin-block: 0 on the SVG. */
+  /* An SVG icon or logo inside a link or text sits centered on the text.
+     Up to 2em tall, it never makes its line taller. If you make its parent
+     flex or grid, set margin-block: 0 on the SVG. */
   :where(a, span, p, li, h1, h2, h3, h4, h5, h6, dt, dd, td, th, label, summary) > svg {
     vertical-align: middle;
     margin-block: -1em;
@@ -341,14 +373,14 @@
     flex-direction: column;
     gap: var(--ds-space-3);
   }
-  .ds-stack:has(> :is(.ds-stack, .ds-aside, .ds-grid)) {
+  .ds-stack:has(> :is(.ds-stack, .ds-aside, .ds-grid, .ds-field)) {
     gap: var(--ds-space-6);
   }
   /* A label leads its group: 8px below it instead of the stack's gap */
   .ds-stack > .ds-label:first-child + * {
     margin-block-start: calc(var(--ds-space-2) - var(--ds-space-3));
   }
-  .ds-stack:has(> :is(.ds-stack, .ds-aside, .ds-grid))
+  .ds-stack:has(> :is(.ds-stack, .ds-aside, .ds-grid, .ds-field))
     > .ds-label:first-child
     + * {
     margin-block-start: calc(var(--ds-space-2) - var(--ds-space-6));
@@ -551,7 +583,9 @@
     font-family: var(--ds-font-mono);
     font-size: 0.9375em;
   }
-  /* Long lines wrap: a scrollbar would add height off the grid */
+  /* Long lines scroll instead of wrapping, because wrapping can change
+     what code means. Where scrollbars take up space, this can put the
+     block off the grid; the code matters more. */
   :where(.ds-prose) :where(pre) {
     padding: var(--ds-space-4);
     border-radius: var(--ds-radius);
@@ -559,8 +593,7 @@
     font-family: var(--ds-font-mono);
     font-size: var(--ds-text-sm);
     line-height: var(--ds-leading-tight);
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
+    overflow-x: auto;
   }
   :where(.ds-prose) :where(pre code) {
     font-size: inherit;
@@ -682,5 +715,107 @@
     overflow: hidden;
     clip-path: inset(50%);
     white-space: nowrap;
+  }
+}
+
+/* ── 6. Buttons and forms ──────────────────────────────────────────────── */
+/* One button style and plain fields, all 40px tall. Last layer, so a       */
+/* button inside prose or with a text class keeps its look.                 */
+
+@layer ds.form {
+  /* The button: filled with the text color, sized to its label */
+  :where(button, input:is([type="submit"], [type="button"], [type="reset"])),
+  .ds-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--ds-space-2);
+    align-self: start;
+    justify-self: start;
+    min-block-size: var(--ds-control);
+    padding: 0 var(--ds-space-4);
+    border: 0;
+    border-radius: var(--ds-radius);
+    background: var(--ds-primary);
+    color: var(--ds-background);
+    font-weight: var(--ds-weight-medium);
+    line-height: var(--ds-leading-tight);
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: opacity 150ms ease;
+  }
+  @media (hover: hover) {
+    :where(button, input:is([type="submit"], [type="button"], [type="reset"])):hover,
+    .ds-button:hover {
+      opacity: 0.8;
+    }
+  }
+
+  /* A field: label text, then the control, 8px apart */
+  .ds-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-2);
+  }
+
+  /* Text fields, selects, and textareas fill the width. 9px padding and a
+     1px border around a 20px line make 40px. */
+  :where(
+      input:not([type="checkbox"], [type="radio"], [type="submit"], [type="button"], [type="reset"], [type="file"], [type="range"], [type="color"], [type="image"], [type="hidden"]),
+      select,
+      textarea
+    ) {
+    display: block;
+    inline-size: 100%;
+    min-block-size: var(--ds-control);
+    padding: calc((var(--ds-control) - var(--ds-leading-tight)) / 2 - var(--ds-hairline)) var(--ds-space-3);
+    border: var(--ds-hairline) solid color-mix(in oklab, currentColor 20%, transparent);
+    border-radius: var(--ds-radius);
+    background-color: var(--ds-background);
+    line-height: var(--ds-leading-tight);
+  }
+  :where(input, textarea)::placeholder {
+    color: var(--ds-muted-foreground);
+    opacity: 1;
+  }
+  /* Paragraph lines; any number of rows stays on the grid */
+  :where(textarea) {
+    line-height: var(--ds-leading-normal);
+    resize: vertical;
+  }
+  /* A chevron drawn in the text color, so it follows dark mode */
+  :where(select:not([multiple], [size])) {
+    appearance: none;
+    padding-inline-end: var(--ds-space-8);
+    background-image:
+      linear-gradient(45deg, transparent 50%, currentColor 50%),
+      linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position:
+      calc(100% - 18px) 50%,
+      calc(100% - 13px) 50%;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+  }
+
+  /* Checkboxes and radios sit in the line of their label without making
+     it taller */
+  :where(input:is([type="checkbox"], [type="radio"])) {
+    inline-size: var(--ds-space-4);
+    block-size: var(--ds-space-4);
+    margin-block: -1em;
+    margin-inline-end: var(--ds-space-2);
+    vertical-align: middle;
+    accent-color: var(--ds-primary);
+  }
+
+  :where(fieldset) {
+    min-inline-size: 0;
+  }
+
+  :where(button, input, select, textarea):disabled,
+  .ds-button[aria-disabled="true"] {
+    opacity: 0.4;
+    cursor: not-allowed;
   }
 }

@@ -150,6 +150,39 @@
             </div>
           </div>
 
+          <!-- ── Button and form ─────────────────────────────────────── -->
+
+          <div class="ds-stack">
+            <h2 class="ds-label">Button</h2>
+            <span class="ds-small ds-muted">button, .ds-button · one style, 40px, with a .ds-link beside it</span>
+            <div class="ds-cluster"><button type="button">Start free trial</button><a class="ds-link" href="#">See pricing</a></div>
+          </div>
+
+          <div class="ds-stack">
+            <h2 class="ds-label">Form</h2>
+            <span class="ds-small ds-muted">.ds-field in a .ds-stack · label 8px above, fields 24px apart</span>
+            <form class="ds-stack" action="#">
+              <label class="ds-field"><span>Name</span><input type="text" name="name" autocomplete="name" placeholder="Ada Lovelace" /></label>
+              <label class="ds-field">
+                <span>Email</span>
+                <input type="email" name="email" autocomplete="email" placeholder="ada@example.com" />
+                <span class="ds-small ds-muted">Only used to reply.</span>
+              </label>
+              <label class="ds-field">
+                <span>Topic</span>
+                <select name="topic"><option>A new site</option><option>A redesign</option><option>Something else</option></select>
+              </label>
+              <label class="ds-field"><span>Message</span><textarea name="message" rows="3" placeholder="What are you working on?"></textarea></label>
+              <div class="ds-field" role="radiogroup" aria-labelledby="budget">
+                <span id="budget">Budget</span>
+                <label><input type="radio" name="budget" checked /> Under $10k</label>
+                <label><input type="radio" name="budget" /> $10k or more</label>
+              </div>
+              <label><input type="checkbox" name="copy" checked /> Send me a copy</label>
+              <div class="ds-cluster"><button type="submit">Send</button><button type="button" disabled>Disabled</button></div>
+            </form>
+          </div>
+
           <!-- ── Prose ──────────────────────────────────────────────── -->
 
           <div class="ds-stack">
@@ -210,9 +243,9 @@
             </dl>
 
             <h2>Code</h2>
-            <p>A code block uses a light fill. Long lines wrap instead of scrolling, so the block never adds a scrollbar.</p>
+            <p>A code block uses a light fill. Long lines scroll sideways instead of wrapping, because wrapping can change what code means.</p>
             <pre><code>:root {
-  --ds-prose: 32rem; /* a long comment that wraps onto a second line on narrow screens */
+  --ds-prose: 32rem; /* a long comment that scrolls sideways on narrow screens */
 }</code></pre>
 
             <h2>Quote</h2>
