@@ -6,6 +6,16 @@
     <title>Demo — ds.css</title>
     <link rel="stylesheet" href="../ds.css" />
     <style>
+      /* Neutral palette, same as the homepage */
+      :root {
+        --ds-background: light-dark(#ffffff, #0a0a0a);
+        --ds-foreground: light-dark(#0a0a0a, #fafafa);
+        --ds-muted: light-dark(#f5f5f5, #262626);
+        --ds-muted-foreground: light-dark(#737373, #a3a3a3);
+        --ds-border: light-dark(#e5e5e5, rgb(255 255 255 / 0.1));
+        --ds-primary: light-dark(#0a0a0a, #fafafa);
+      }
+
       /* Demo-only helpers. Not part of ds.css. */
       .demo-name {
         color: var(--ds-muted-foreground);
@@ -58,8 +68,8 @@
           <div class="ds-masthead">
             <a class="ds-primary" href="../">brijr/ds</a>
             <span class="ds-muted">Every styled element</span>
-            <h1 class="ds-crumb"><span class="ds-muted">/</span><a href="./">Demo</a></h1>
           </div>
+          <h1 class="ds-sr-only">Demo</h1>
         </div>
       </header>
 
@@ -266,7 +276,7 @@
             <h2>Code</h2>
             <p>A code block uses a light fill. Long lines wrap instead of scrolling, so the block never adds a scrollbar.</p>
             <pre><code>:root {
-  --ds-primary: light-dark(#ff5c00, #ff5c00);
+  --ds-primary: light-dark(#0a0a0a, #fafafa);
   --ds-prose: 32rem; /* a long comment that wraps onto a second line on narrow screens */
 }</code></pre>
 
