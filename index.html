@@ -12,10 +12,12 @@
     <main class="ds-main" id="main">
       <header class="ds-section">
         <div class="ds-container">
-          <div class="ds-masthead">
+          <nav class="ds-nav" aria-label="Site">
             <a class="ds-primary" href="/">brijr/ds</a>
-            <span class="ds-muted">Typography, spacing, layout</span>
-          </div>
+            <div>
+              <a href="https://github.com/brijr/ds">GitHub</a>
+            </div>
+          </nav>
         </div>
       </header>
 
@@ -23,18 +25,17 @@
         <div class="ds-container">
           <div class="ds-stack">
             <h1>A single CSS file for typography, spacing, and layout.</h1>
-            <p>Built from <a class="ds-link" href="https://bridger.to">bridger.to</a> and <a class="ds-link" href="https://craft-ds.com">Craft</a>. The rules for using it are written at the top of the file, so you can hand it to an AI agent and get pages that read well and feel consistent.</p>
+            <p class="ds-muted">Built from <a class="ds-link" href="https://bridger.to">bridger.to</a> and <a class="ds-link" href="https://craft-ds.com">Craft</a>. The rules for using it are written at the top of the file, so you can hand it to an AI agent and get pages that read well and feel consistent.</p>
           </div>
 
           <nav class="ds-cluster" aria-label="Links">
-            <a class="ds-link" href="ds.css" download>Download ds.css</a>
-            <a class="ds-link" href="demo/">Demo</a>
-            <a class="ds-link" href="https://github.com/brijr/ds">GitHub</a>
-            <a class="ds-link" href="#use">How to use it</a>
+            <a class="ds-link ds-muted" href="ds.css" download>Download ds.css</a>
+            <a class="ds-link ds-muted" href="https://github.com/brijr/ds">GitHub</a>
+            <a class="ds-link ds-muted" href="#use">How to use it</a>
           </nav>
 
           <figure class="ds-full ds-stack motion-example">
-            <div class="motion-study" role="img" aria-label="Twelve vertical bars rising and falling in a continuous wave">
+            <div class="motion-study" role="img" aria-label="The twelve page columns, numbered, each with a bar rising and falling in a continuous wave">
               <span style="--i: 0"></span>
               <span style="--i: 1"></span>
               <span style="--i: 2"></span>
@@ -49,7 +50,7 @@
               <span style="--i: 11"></span>
             </div>
             <figcaption class="ds-row ds-small ds-muted">
-              <span>A little room for motion.</span>
+              <span>The twelve-column grid.</span>
               <label class="motion-toggle" for="home-motion"><input id="home-motion" type="checkbox" checked /> Animate</label>
               <span class="motion-reduced">Reduced motion</span>
             </figcaption>
@@ -61,6 +62,11 @@
               <p>Most of what makes a website feel considered is not its components. It is the type, the space between things, and where things sit on the page. This file handles that, plus one button and plain form fields, and leaves everything else to you.</p>
             </div>
           </section>
+
+          <figure class="ds-wide ds-grid">
+            <img src="assets/photos/flowers.webp" width="960" height="1200" alt="Pink, orange, and yellow flowers blurred by fast motion" loading="lazy" />
+            <img src="assets/photos/meadow.webp" width="960" height="1200" alt="A meadow of yellow and blue wildflowers" loading="lazy" />
+          </figure>
 
           <section class="ds-stack">
             <h2>Typography</h2>
@@ -78,18 +84,18 @@
             </div>
           </section>
 
+          <figure class="ds-wide ds-grid">
+            <img src="assets/photos/cyanotype.webp" width="960" height="1200" alt="Pale flower shapes on a deep blue cyanotype" loading="lazy" />
+            <img src="assets/photos/blue-fold.webp" width="960" height="1200" alt="A fold of deep blue cutting across a pale field" loading="lazy" />
+          </figure>
+
           <section class="ds-stack">
             <h2>Layout</h2>
             <div class="ds-prose">
               <p>The page is a twelve-column canvas with 24px gutters. Everything starts at the first column. Text fills six columns, up to 660px wide. Images can stretch across eight columns, and motion or other visual work can use all twelve. Headings stay above the text.</p>
-              <p>Columns respond to the space they have, not to a choice. A grid is two equal columns, or one on a phone, and its columns keep the same width however many items it holds. Inside a content block, a grid divides its own twelve tracks into two equal groups of six. An aside uses four tracks for a label and eight for its content, so both land on page columns. Below 408px of available width, both layouts stack. On tablets, wide images stretch across ten columns; on phones, everything uses the full reading width. See the <a href="demo/">demo</a> for every element.</p>
+              <p>Columns respond to the space they have, not to a choice. A grid is two equal columns, or one on a phone, and its columns keep the same width however many items it holds. Inside a content block, a grid divides its own twelve tracks into two equal groups of six. An aside uses four tracks for a label and eight for its content, so both land on page columns. Below 408px of available width, both layouts stack. On tablets, wide images stretch across ten columns; on phones, everything uses the full reading width.</p>
             </div>
           </section>
-
-          <figure class="ds-wide ds-stack">
-            <img src="assets/grid-study.svg" width="1200" height="480" alt="Ascending black bars, a square, and a circle arranged on a pale field" loading="lazy" />
-            <figcaption class="ds-small ds-muted">A study in proportion. More space for the image, the same rhythm underneath.</figcaption>
-          </figure>
 
           <section class="ds-stack">
             <h2>Buttons and forms</h2>
@@ -97,6 +103,11 @@
               <p>There is one button: filled with the text color, 48px tall. Give each group one button for its main action and make the rest plain links beside it. Fields put their label 8px above a full-width input, and fields in a form sit 24px apart.</p>
             </div>
           </section>
+
+          <figure class="ds-wide ds-grid">
+            <img src="assets/photos/comet.webp" width="960" height="1200" alt="A red comet streaking across a starry sky" loading="lazy" />
+            <img src="assets/photos/night-ride.webp" width="960" height="1200" alt="A motocross rider in the air over a dirt hill at night" loading="lazy" />
+          </figure>
 
           <section class="ds-stack">
             <h2 id="use">How to use it</h2>
@@ -119,5 +130,14 @@
         </div>
       </section>
     </main>
+
+    <footer class="ds-section">
+      <div class="ds-container">
+        <div class="ds-full ds-row ds-small ds-muted">
+          <span>&copy; 2026 <a class="ds-muted" href="https://bridger.to">Bridger Tower</a></span>
+          <a class="ds-muted" href="https://github.com/brijr/ds">GitHub</a>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>

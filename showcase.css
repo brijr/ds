@@ -1,21 +1,42 @@
 /* Site examples only. Page placement and reading widths come from ds.css. */
+/* The hero study draws the page grid: twelve numbered column tracks on a
+   muted field, one per page column, with a bar rising inside each. The
+   gutters between tracks are the page's 24px gutters. */
 .motion-study {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  align-items: end;
   gap: var(--ds-gutter);
   height: calc(var(--ds-space-18) * 4);
   overflow: hidden;
+  background: var(--ds-muted);
+  counter-reset: column;
 }
 .motion-study > span {
-  height: 100%;
+  position: relative;
+  background: color-mix(in oklab, var(--ds-foreground) 4%, transparent);
+  counter-increment: column;
+}
+.motion-study > span::before {
+  content: counter(column);
+  position: absolute;
+  inset-block-start: var(--ds-space-2);
+  inset-inline-start: var(--ds-space-2);
+  color: var(--ds-muted-foreground);
+  font-size: var(--ds-text-xs);
+  line-height: var(--ds-leading-xs);
+  font-variant-numeric: tabular-nums;
+}
+.motion-study > span::after {
+  content: "";
+  position: absolute;
+  inset: var(--ds-space-8) 0 0;
   background: var(--ds-foreground);
   transform-origin: bottom;
   transform: scaleY(.3);
   animation: ds-study-wave 4800ms ease-in-out infinite alternate;
   animation-delay: calc(var(--i) * -320ms);
 }
-.motion-example:has(input:not(:checked)) .motion-study > span {
+.motion-example:has(input:not(:checked)) .motion-study > span::after {
   animation-play-state: paused;
 }
 .motion-reduced { display: none; }
@@ -28,9 +49,12 @@
     gap: var(--ds-space-2);
     height: calc(var(--ds-space-18) * 2);
   }
+  /* Too narrow for numbers on phones */
+  .motion-study > span::before { content: none; }
+  .motion-study > span::after { inset-block-start: var(--ds-space-4); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .motion-study > span {
+  .motion-study > span::after {
     animation: none;
     transform: scaleY(calc(.2 + var(--i) * .06));
   }

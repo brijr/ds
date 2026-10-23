@@ -34,10 +34,10 @@
  *      .ds-small 24px, .ds-label 20px
  *
  * 3. A twelve-column page, up to 1344px wide. .ds-container places
- *    normal blocks in the first six columns from 768px, up to 660px of
- *    text. Add .ds-wide to a direct child for eight columns (ten on
- *    tablets), or .ds-full for all twelve. On phones, all blocks use the
- *    available reading width.
+ *    normal blocks in the first six columns from 1280px, up to 660px of
+ *    text, and the first eight on tablets. Add .ds-wide to a direct child
+ *    for eight columns (ten on tablets), or .ds-full for all twelve. On
+ *    phones, all blocks use the available reading width.
  *    Keep wide/full blocks as direct children of .ds-container, alongside
  *    text blocks, so they can extend beyond the reading column.
  *
@@ -47,10 +47,10 @@
  *        <main class="ds-main">
  *          <header class="ds-section">
  *            <div class="ds-container">
- *              <div class="ds-masthead">
+ *              <nav class="ds-nav" aria-label="Site">
  *                <a class="ds-primary" href="/">Name</a>
- *                <span class="ds-muted">Role</span>
- *              </div>
+ *                <div><a href="/work">Work</a><a href="/about">About</a></div>
+ *              </nav>
  *            </div>
  *          </header>
  *          <section class="ds-section">
@@ -86,6 +86,10 @@
  *                     an h1 sits 24px above what follows it.
  *      .ds-row        one line, items pushed to both ends (title + date)
  *      .ds-cluster    a wrapping line of items, like links
+ *      .ds-nav        the site header across the whole canvas: the name
+ *                     first, then one element holding the links, which
+ *                     sit at the far end, 24px apart. On narrow screens
+ *                     the links wrap below the name.
  *      .ds-aside      a label or date beside its content; the label moves
  *                     on top when there isn't room. Exactly two children:
  *                     the label, then one element holding the content.
@@ -412,24 +416,28 @@
     height: auto;
   }
 
-  /* From 768px: text 6 columns, wide 10, full 12. From 1280px, wide
-     narrows to 8. The canvas grows smoothly up to its maximum. */
+  /* From 768px: text 8 columns, wide 10, full 12. From 1280px, text
+     narrows to 6 and wide to 8. The canvas grows smoothly up to its
+     maximum. */
   @media (min-width: 48rem) {
     :root {
       --ds-canvas: var(--ds-canvas-max);
       --ds-prose: calc((var(--ds-canvas-max) - var(--ds-gutter)) / 2);
     }
     .ds-container > * {
-      grid-column: 1 / span 6;
+      grid-column: 1 / span 8;
     }
     .ds-container > .ds-wide {
       grid-column: 1 / span 10;
     }
-    .ds-container > .ds-full {
+    .ds-container > :is(.ds-full, .ds-nav) {
       grid-column: 1 / -1;
     }
   }
   @media (min-width: 80rem) {
+    .ds-container > * {
+      grid-column: 1 / span 6;
+    }
     .ds-container > .ds-wide {
       grid-column: 1 / span 8;
     }
@@ -483,6 +491,19 @@
     flex-wrap: wrap;
     align-items: center;
     gap: var(--ds-space-2) var(--ds-space-3);
+  }
+
+  /* Site nav: the name at the start, links at the end. Everything wraps,
+     so on phones the links drop below the name. */
+  .ds-nav,
+  .ds-nav > :last-child:not(:first-child) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ds-space-2) var(--ds-space-6);
+  }
+  .ds-nav {
+    justify-content: space-between;
   }
 
   /* Local twelve-track layouts, measured against their own width.
