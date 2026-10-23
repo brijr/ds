@@ -25,13 +25,12 @@
         <div class="ds-container">
           <div class="ds-stack">
             <h1>A single CSS file for typography, spacing, and layout.</h1>
-            <p class="ds-muted">Built from <a class="ds-link" href="https://bridger.to">bridger.to</a> and <a class="ds-link" href="https://craft-ds.com">Craft</a>. The rules for using it are written at the top of the file, so you can hand it to an AI agent and get pages that read well and feel consistent.</p>
+            <p class="ds-muted">The rules for using it are written at the top of the file, so you can hand it to an AI agent and get pages that read well and feel consistent.</p>
           </div>
 
           <nav class="ds-cluster" aria-label="Links">
             <a class="ds-link ds-muted" href="ds.css" download>Download ds.css</a>
             <a class="ds-link ds-muted" href="https://github.com/brijr/ds">GitHub</a>
-            <a class="ds-link ds-muted" href="#use">How to use it</a>
           </nav>
 
           <figure class="ds-full ds-stack motion-example">
@@ -71,7 +70,7 @@
           <section class="ds-stack">
             <h2>Typography</h2>
             <div class="ds-prose">
-              <p>Text uses the system's own sans serif: Helvetica Neue on Mac, Segoe UI on Windows, and Nimbus Sans or Liberation Sans on Linux. Nothing downloads, so the page never shifts while fonts load.</p>
+              <p>Text uses each device's own interface font: San Francisco on Mac and iPhone, Segoe UI on Windows, Roboto on Android, and the desktop's font on Linux. Nothing downloads, so the page never shifts while fonts load.</p>
               <p>The type scale is small. Body text starts at 20px. A page title is 36px on 40px lines, section headings are 24px, and everything else is 20px. Below that, hierarchy comes from color, weight, order, and space, with a clear contrast between the page title and its supporting text.</p>
               <p>There are no sizes to pick. Each heading level has its size, and line spacing follows the element: tight for single lines like names and labels, and more open for paragraphs and long-form writing.</p>
             </div>
@@ -92,7 +91,7 @@
           <section class="ds-stack">
             <h2>Layout</h2>
             <div class="ds-prose">
-              <p>The page is a twelve-column canvas with 24px gutters. Everything starts at the first column. Text fills six columns, up to 660px wide. Images can stretch across eight columns, and motion or other visual work can use all twelve. Headings stay above the text.</p>
+              <p>The page is a twelve-column canvas with 24px gutters. Everything starts at the first column. Text fills six columns, up to 660px wide, or eight on tablets. Images can stretch across eight columns, and motion or other visual work can use all twelve. Headings stay above the text.</p>
               <p>Columns respond to the space they have, not to a choice. A grid is two equal columns, or one on a phone, and its columns keep the same width however many items it holds. Inside a content block, a grid divides its own twelve tracks into two equal groups of six. An aside uses four tracks for a label and eight for its content, so both land on page columns. Below 408px of available width, both layouts stack. On tablets, wide images stretch across ten columns; on phones, everything uses the full reading width.</p>
             </div>
           </section>

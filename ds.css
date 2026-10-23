@@ -157,12 +157,13 @@
   :root {
     /*
      * System fonts only: nothing downloads, so text never shifts on load.
-     * Mac/iOS: Helvetica Neue. Windows: Segoe UI. Linux: Nimbus Sans (a
-     * Helvetica clone), then Liberation Sans. Android: Roboto via sans-serif.
+     * Each device's own interface font, which has every weight: San
+     * Francisco on Mac/iOS, Segoe UI on Windows, Roboto on Android, and
+     * the desktop's font on Linux.
      */
-    --ds-font-sans: "Helvetica Neue", Helvetica, "Segoe UI", "Nimbus Sans",
-      "Liberation Sans", Arial, sans-serif, "Apple Color Emoji",
-      "Segoe UI Emoji";
+    --ds-font-sans: system-ui, -apple-system, "Segoe UI", Roboto,
+      "Helvetica Neue", "Liberation Sans", Arial, sans-serif,
+      "Apple Color Emoji", "Segoe UI Emoji";
     --ds-font-mono: ui-monospace, "SF Mono", Menlo, Consolas,
       "DejaVu Sans Mono", "Liberation Mono", monospace;
 
