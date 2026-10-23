@@ -8,10 +8,10 @@ Built from [bridger.to](https://bridger.to) and [Craft](https://craft-ds.com). E
 
 ## What's in it
 
-- **Type.** A small scale set by element: h1 is 24px, h2 is 20px, everything else is 16px, with 14px meta (`.ds-small`) and 12px labels (`.ds-label`). Line spacing follows the element: 20px for single lines, 24px for paragraphs and prose.
-- **Layout.** One centered 512px column on every page. `.ds-stack`, `.ds-row`, `.ds-cluster`, `.ds-aside`, and `.ds-grid` space themselves by context, so there are no sizes to pick.
+- **Type.** A small scale set by element: body text starts at 20px (1.25rem). h1 is 36px on 40px lines, h2 is 24px, everything else is 20px, with 16px meta (`.ds-small`) and 14px labels (`.ds-label`). Line spacing follows the element: 24px for single lines, 28px for paragraphs and prose.
+- **Layout.** A twelve-column canvas with 24px gutters. Every block starts at column 1. Normal blocks fill the first six columns from 768px, up to 660px wide. Put `.ds-wide` on a direct child of `.ds-container` for eight columns (ten on tablets), or `.ds-full` for all twelve. Phones use the available reading width. Major blocks sit 48–72px apart. Local `.ds-grid` layouts split into six/six tracks; `.ds-aside` and `.ds-masthead` use four/eight, stacking below 408px of their own available width.
 - **Prose.** `.ds-prose` styles everything markdown can produce: headings, lists, code, quotes, tables, figures.
-- **Button and forms.** One filled 40px button (`<button>` or `.ds-button`). Text inputs, selects, and textareas fill the width at 40px; `.ds-field` pairs a label with its control.
+- **Button and forms.** One filled 48px button (`<button>` or `.ds-button`). Text inputs, selects, and textareas fill the width at 48px; `.ds-field` pairs a label with its control.
 - **Color.** Neutral grays with light and dark modes that follow the system. Every color is a `--ds-*` variable.
 
 ## Use it
@@ -27,6 +27,24 @@ Or copy [`ds.css`](ds.css) into your project. To change colors, override the `--
   --ds-primary: light-dark(#2563eb, #60a5fa);
 }
 ```
+
+## Text and wider media
+
+Keep media as a sibling of text, directly inside the page container:
+
+```html
+<div class="ds-container">
+  <section class="ds-prose">Text fills the reading span.</section>
+  <figure class="ds-wide">
+    <img src="image.jpg" alt="Describe the image" />
+  </figure>
+  <div class="ds-full">An animation or other full-width element</div>
+</div>
+```
+
+At 1280px and above, spans are 6 / 8 / 12. From 768px, they are 6 / 10 / 12. Below 768px, they share one reading width. The canvas tops out at 1344px plus page padding, so text tops out at 660px.
+
+The homepage and demo's geometric image and animated bars are examples. Their artwork lives in `assets/grid-study.svg` and `showcase.css`; the grid itself is entirely in `ds.css`. The animation has a pause control and honors reduced motion.
 
 ## Build with an agent
 
@@ -53,6 +71,8 @@ See the [demo](https://ds.brijr.dev/demo/) for every element with its class name
 - `index.html`: the homepage
 - `demo/index.html`: every styled element
 - `404.html`: not-found page
+- `showcase.css`: example animation, separate from the design system
+- `assets/grid-study.svg`: geometric image used to demonstrate wide media
 
 ## Deploy
 

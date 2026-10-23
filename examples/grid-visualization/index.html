@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Our grid — ds.css</title>
+<style>
+  :root {
+    font-size: 16px;
+    --font-size-base: 14px;
+    --viz-series-1: var(--chart-1);
+    --viz-series-2: var(--chart-2);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: transparent; }
+  body { color: var(--foreground); font: 400 var(--font-size-base)/1.5 var(--font-sans, system-ui, sans-serif); }
+  button, input { font: inherit; }
+  #ds-grid-viz { width: 100%; }
+  #ds-grid-viz h2 { margin: 0; font-size: calc(var(--font-size-base) * 1.43); font-weight: 500; }
+  #ds-grid-viz .subtle { color: var(--muted-foreground); }
+  #ds-grid-viz .small { font-size: calc(var(--font-size-base) * .86); }
+  #ds-grid-viz .mono { font-family: var(--font-mono, ui-monospace, monospace); font-variant-numeric: tabular-nums; }
+  #ds-grid-viz .heading { margin-bottom: 24px; }
+  #ds-grid-viz .heading .subtle { margin-top: 4px; }
+  #ds-grid-viz .controls { display: flex; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 24px; }
+  #ds-grid-viz .width-control { display: grid; gap: 8px; flex: 1 1 240px; }
+  #ds-grid-viz .control-label { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  #ds-grid-viz input[type="range"] { width: 100%; margin: 0; accent-color: var(--primary); }
+  #ds-grid-viz .overlay-control { display: flex; align-items: center; gap: 8px; min-height: 32px; white-space: nowrap; }
+  #ds-grid-viz input[type="checkbox"] { margin: 0; accent-color: var(--primary); }
+  #ds-grid-viz .stage { position: relative; padding: 0 68px; }
+  #ds-grid-viz .drawing { width: min(var(--content-width, 512px), 100%); margin: 0 auto; }
+  #ds-grid-viz .ruler { display: flex; align-items: center; gap: 12px; margin: 0 0 16px; }
+  #ds-grid-viz .ruler::before, #ds-grid-viz .ruler::after { content: ""; flex: 1; height: 6px; border-block-start: 1px solid var(--muted-foreground); }
+  #ds-grid-viz .ruler::before { border-inline-start: 1px solid var(--muted-foreground); }
+  #ds-grid-viz .ruler::after { border-inline-end: 1px solid var(--muted-foreground); }
+  #ds-grid-viz .ruler span { white-space: nowrap; }
+  /* The specimen uses the source system's tokens and layout rules. */
+  #ds-grid-viz .specimen {
+    --ds-text-xl: 1.5rem;
+    --ds-text-base: 1rem;
+    --ds-text-xs: .75rem;
+    --ds-leading-xl: 2rem;
+    --ds-leading-tight: 1.25rem;
+    --ds-leading-normal: 1.5rem;
+    --ds-leading-xs: 1rem;
+    --ds-space-1: .25rem;
+    --ds-space-2: .5rem;
+    --ds-space-3: .75rem;
+    --ds-space-4: 1rem;
+    --ds-space-6: 1.5rem;
+    --ds-space-8: 2rem;
+    --ds-grid-min: 12rem;
+    --ds-gutter: var(--ds-space-6);
+    --ds-control: 2.5rem;
+    --ds-font-sans: "Helvetica Neue", Helvetica, "Segoe UI", "Nimbus Sans", "Liberation Sans", Arial, sans-serif;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-8);
+    font: 400 var(--ds-text-base)/var(--ds-leading-tight) var(--ds-font-sans);
+    background-image: repeating-linear-gradient(to bottom, color-mix(in srgb, var(--foreground) 9%, transparent) 0 1px, transparent 1px 4px);
+    outline: 1px solid var(--border);
+  }
+  #ds-grid-viz[data-overlay="false"] .specimen { background-image: none; }
+  #ds-grid-viz .specimen * { margin: 0; padding: 0; border: 0; }
+  #ds-grid-viz .specimen h1 {
+    font-size: var(--ds-text-xl);
+    line-height: var(--ds-leading-xl);
+    letter-spacing: -.025em;
+    font-weight: 500;
+    text-wrap: balance;
+  }
+  #ds-grid-viz .specimen p { line-height: var(--ds-leading-normal); text-wrap: pretty; }
+  #ds-grid-viz .ds-stack { display: flex; flex-direction: column; gap: var(--ds-space-3); }
+  #ds-grid-viz .ds-stack:has(> .ds-grid) { gap: var(--ds-space-6); }
+  #ds-grid-viz .ds-label { font-size: var(--ds-text-xs); line-height: var(--ds-leading-xs); color: var(--muted-foreground); }
+  #ds-grid-viz .ds-stack:has(> .ds-grid) > .ds-label:first-child + * { margin-block-start: calc(var(--ds-space-2) - var(--ds-space-6)); }
+  #ds-grid-viz .ds-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(var(--ds-grid-min), 100%), 1fr)); gap: var(--ds-gutter); }
+  #ds-grid-viz .type-box { background-color: color-mix(in srgb, var(--viz-series-1) 11%, transparent); }
+  #ds-grid-viz .grid-label { display: flex; justify-content: space-between; gap: var(--ds-space-2); }
+  #ds-grid-viz .item-heading { display: flex; justify-content: space-between; gap: var(--ds-space-2); }
+  #ds-grid-viz .item-width { font-size: var(--ds-text-xs); color: var(--muted-foreground); }
+  #ds-grid-viz .control-demo { height: var(--ds-control); display: flex; align-items: center; justify-content: space-between; padding-inline: var(--ds-space-3); background: color-mix(in srgb, var(--viz-series-1) 11%, transparent); }
+  #ds-grid-viz .annotations { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+  #ds-grid-viz .annotations text { font-family: var(--font-mono, ui-monospace, monospace); font-size: 12px; fill: var(--muted-foreground); }
+  #ds-grid-viz .annotations .bracket { fill: none; stroke: var(--muted-foreground); stroke-width: 1; }
+  #ds-grid-viz .annotations .space { fill: color-mix(in srgb, var(--viz-series-2) 18%, transparent); }
+  #ds-grid-viz[data-overlay="false"] .annotations .space { opacity: 0; }
+  #ds-grid-viz .legend { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 20px; }
+  #ds-grid-viz .legend span { display: flex; gap: 8px; align-items: center; }
+  #ds-grid-viz .swatch { display: inline-block; width: 12px; height: 8px; }
+  #ds-grid-viz .line-swatch { background: color-mix(in srgb, var(--viz-series-1) 45%, transparent); }
+  #ds-grid-viz .space-swatch { background: color-mix(in srgb, var(--viz-series-2) 45%, transparent); }
+  #ds-grid-viz .status { min-height: 21px; margin-top: 12px; }
+  #ds-grid-viz .token-section { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border); }
+  #ds-grid-viz .token-title { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+  #ds-grid-viz .tokens { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; margin-top: 16px; }
+  #ds-grid-viz .token { min-width: 20px; display: flex; flex-direction: column; gap: 8px; }
+  #ds-grid-viz .token-bar { height: 12px; width: var(--size); background: color-mix(in srgb, var(--viz-series-2) 55%, transparent); background-image: repeating-linear-gradient(to right, transparent 0 3px, var(--background) 3px 4px); }
+  @media (max-width: 600px) {
+    #ds-grid-viz .stage { padding-inline: 0; }
+    #ds-grid-viz .annotations .dimensions { display: none; }
+    #ds-grid-viz .controls { gap: 12px 24px; }
+    #ds-grid-viz .width-control { flex-basis: 100%; }
+  }
+</style>
+</head>
+<body>
+<section id="ds-grid-viz" aria-label="ds.css grid anatomy" data-overlay="true">
+  <div class="heading">
+    <h2>Our grid</h2>
+    <div class="subtle">4px vertical rhythm · fluid columns</div>
+  </div>
+  <div class="controls">
+    <label class="width-control" for="grid-width">
+      <span class="control-label"><span>Content width</span><output id="width-value" class="mono small" for="grid-width">512px</output></span>
+      <input class="form-range" id="grid-width" type="range" min="280" max="512" step="1" value="512" aria-describedby="grid-status">
+    </label>
+    <label class="overlay-control form-check" for="grid-overlay"><input class="form-check-input" id="grid-overlay" type="checkbox" checked><span class="form-check-label">4px overlay</span></label>
+  </div>
+  <div class="stage" id="grid-stage">
+    <div class="drawing" id="grid-drawing">
+      <div class="ruler small mono subtle"><span id="ruler-value">512px content</span></div>
+      <div class="specimen" id="grid-specimen" role="img" aria-label="Live ds.css specimen. The heading has a 32px line box, paragraphs have 24px line boxes, a stack has 12px gaps, page blocks have 32px gaps, columns have a 24px gutter, and a control is 40px tall.">
+        <div class="ds-stack" id="sample-hero">
+          <h1 class="type-box" id="sample-heading">Built on four.</h1>
+          <p class="type-box" id="sample-paragraph">Type, space, and controls share one rhythm. Columns adapt to the available width.</p>
+        </div>
+        <div class="ds-stack" id="sample-grid-group">
+          <div class="ds-label grid-label" id="sample-grid-label"><span>.ds-grid</span><span class="mono">24px gutter</span></div>
+          <div class="ds-grid" id="sample-grid">
+            <div class="ds-stack" id="sample-cell-one">
+              <div class="type-box item-heading"><span>Work</span><span class="item-width mono" data-cell-width>244px</span></div>
+              <p class="type-box">Sites and products.</p>
+            </div>
+            <div class="ds-stack" id="sample-cell-two">
+              <div class="type-box item-heading"><span>Posts</span><span class="item-width mono" data-cell-width>244px</span></div>
+              <p class="type-box">Notes on building.</p>
+            </div>
+          </div>
+        </div>
+        <div class="control-demo" id="sample-control"><span>Control height</span><span class="mono">40px</span></div>
+      </div>
+    </div>
+    <svg class="annotations" id="grid-annotations" aria-hidden="true"></svg>
+  </div>
+  <div class="legend small subtle"><span><i class="swatch line-swatch" aria-hidden="true"></i>Line boxes &amp; fixed height</span><span><i class="swatch space-swatch" aria-hidden="true"></i>Spacing</span></div>
+  <div class="status small subtle" id="grid-status" role="status" aria-live="polite">2 columns · 244px each · 192px minimum</div>
+  <div class="token-section">
+    <div class="token-title"><span>Spacing tokens</span><span class="small subtle">Actual pixels · each segment is 4px</span></div>
+    <div class="tokens mono small" aria-label="Spacing tokens: 4, 8, 12, 16, 24, 32, 48, and 72 pixels">
+      <div class="token"><div class="token-bar" style="--size:4px"></div><span>4</span></div>
+      <div class="token"><div class="token-bar" style="--size:8px"></div><span>8</span></div>
+      <div class="token"><div class="token-bar" style="--size:12px"></div><span>12</span></div>
+      <div class="token"><div class="token-bar" style="--size:16px"></div><span>16</span></div>
+      <div class="token"><div class="token-bar" style="--size:24px"></div><span>24</span></div>
+      <div class="token"><div class="token-bar" style="--size:32px"></div><span>32</span></div>
+      <div class="token"><div class="token-bar" style="--size:48px"></div><span>48</span></div>
+      <div class="token"><div class="token-bar" style="--size:72px"></div><span>72</span></div>
+    </div>
+  </div>
+</section>
+<script>
+(() => {
+  const root = document.getElementById('ds-grid-viz');
+  const width = root.querySelector('#grid-width');
+  const overlay = root.querySelector('#grid-overlay');
+  const drawing = root.querySelector('#grid-drawing');
+  const stage = root.querySelector('#grid-stage');
+  const specimen = root.querySelector('#grid-specimen');
+  const svg = root.querySelector('#grid-annotations');
+  const byId = id => root.querySelector('#' + id);
+  const format = value => Number(value.toFixed(1)).toString();
+  let pending = false;
+  function draw() {
+    pending = false;
+    const s = stage.getBoundingClientRect();
+    const box = element => {
+      const r = element.getBoundingClientRect();
+      return { x: r.left - s.left, y: r.top - s.top, width: r.width, height: r.height, bottom: r.bottom - s.top };
+    };
+    const page = box(specimen);
+    const heading = box(byId('sample-heading'));
+    const paragraph = box(byId('sample-paragraph'));
+    const hero = box(byId('sample-hero'));
+    const group = box(byId('sample-grid-group'));
+    const gridLabel = box(byId('sample-grid-label'));
+    const grid = box(byId('sample-grid'));
+    const one = box(byId('sample-cell-one'));
+    const two = box(byId('sample-cell-two'));
+    const control = box(byId('sample-control'));
+    const columns = getComputedStyle(byId('sample-grid')).gridTemplateColumns.split(' ').length;
+    root.querySelectorAll('[data-cell-width]').forEach(el => { el.textContent = format(one.width) + 'px'; });
+    byId('ruler-value').textContent = format(page.width) + 'px content';
+    byId('width-value').textContent = format(page.width) + 'px';
+    byId('grid-status').textContent = columns === 2
+      ? '2 columns · ' + format(one.width) + 'px each · 192px minimum'
+      : '1 column · two columns need at least 408px of content width';
+    const rect = (x, y, w, h) => '<rect class="space" x="' + x + '" y="' + y + '" width="' + w + '" height="' + Math.max(0, h) + '"/>';
+    const bracket = (y, height, label) => {
+      const x = page.x - 12;
+      return '<g class="dimensions"><path class="bracket" d="M' + (x + 5) + ',' + y + 'H' + x + 'v' + height + 'h5"/><text x="' + (x - 8) + '" y="' + (y + height / 2) + '" text-anchor="end" dominant-baseline="middle">' + label + '</text></g>';
+    };
+    let marks = '';
+    marks += rect(page.x, heading.bottom, page.width, paragraph.y - heading.bottom);
+    marks += rect(page.x, hero.bottom, page.width, group.y - hero.bottom);
+    marks += rect(page.x, gridLabel.bottom, page.width, grid.y - gridLabel.bottom);
+    marks += rect(page.x, group.bottom, page.width, control.y - group.bottom);
+    if (columns === 2) marks += rect(one.x + one.width, grid.y, two.x - one.x - one.width, grid.height);
+    else marks += rect(one.x, one.bottom, one.width, two.y - one.bottom);
+    for (const cell of [byId('sample-cell-one'), byId('sample-cell-two')]) {
+      const a = box(cell.firstElementChild);
+      const b = box(cell.lastElementChild);
+      marks += rect(a.x, a.bottom, a.width, b.y - a.bottom);
+    }
+    marks += bracket(heading.y, heading.height, '32px');
+    marks += bracket(heading.bottom, paragraph.y - heading.bottom, '12px');
+    marks += bracket(paragraph.y, 24, '24px');
+    marks += bracket(hero.bottom, group.y - hero.bottom, '32px');
+    marks += bracket(gridLabel.bottom, grid.y - gridLabel.bottom, '8px');
+    marks += bracket(group.bottom, control.y - group.bottom, '32px');
+    marks += bracket(control.y, control.height, '40px');
+    svg.setAttribute('viewBox', '0 0 ' + s.width + ' ' + s.height);
+    svg.innerHTML = marks;
+  }
+  function queueDraw() { if (!pending) { pending = true; requestAnimationFrame(draw); } }
+  function apply() {
+    drawing.style.setProperty('--content-width', width.value + 'px');
+    root.dataset.overlay = String(overlay.checked);
+    queueDraw();
+  }
+  function restore(state) {
+    const saved = state?.modelContent;
+    if (saved && typeof saved.contentWidth === 'number') width.value = String(Math.max(280, Math.min(512, saved.contentWidth)));
+    if (saved && typeof saved.overlay === 'boolean') overlay.checked = saved.overlay;
+    apply();
+  }
+  function save() {
+    if (window.openai?.setWidgetState) window.openai.setWidgetState({ modelContent: { contentWidth: Number(width.value), overlay: overlay.checked }, privateContent: null }).catch(() => {});
+  }
+  width.addEventListener('input', apply);
+  width.addEventListener('change', save);
+  overlay.addEventListener('change', () => { apply(); save(); });
+  window.addEventListener('openai:set_globals', event => { if (event.detail?.globals?.widgetState) restore(event.detail.globals.widgetState); });
+  new ResizeObserver(queueDraw).observe(stage);
+  restore(window.openai?.widgetState);
+  // Exercise both responsive states without changing the final view.
+  requestAnimationFrame(() => {
+    const original = width.value;
+    const initialOverlay = overlay.checked;
+    width.value = '280';
+    width.dispatchEvent(new Event('input'));
+    const narrowColumns = getComputedStyle(byId('sample-grid')).gridTemplateColumns.split(' ').length;
+    console.assert(narrowColumns === 1, '280px must produce one column');
+    width.value = '512';
+    width.dispatchEvent(new Event('input'));
+    const actual = specimen.getBoundingClientRect().width;
+    const wideColumns = getComputedStyle(byId('sample-grid')).gridTemplateColumns.split(' ').length;
+    console.assert(wideColumns === (actual >= 408 ? 2 : 1), 'Column count must follow the 192px minimum and 24px gap');
+    overlay.checked = false;
+    apply();
+    console.assert(getComputedStyle(specimen).backgroundImage === 'none', 'Overlay toggle must hide guides');
+    overlay.checked = initialOverlay;
+    width.value = original;
+    apply();
+    console.assert(byId('sample-heading').getBoundingClientRect().height === 32, 'Heading line box must be 32px');
+    console.assert(byId('sample-control').getBoundingClientRect().height === 40, 'Control must be 40px');
+    console.assert(document.documentElement.scrollWidth <= window.innerWidth, 'Visualization must fit its viewport');
+    console.log('Grid checks passed:', { contentWidth: actual, narrowColumns, wideColumns, heading: 32, control: 40 });
+  });
+})();
+</script>
+</body>
+</html>

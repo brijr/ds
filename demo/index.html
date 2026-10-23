@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Demo — ds.css</title>
     <link rel="stylesheet" href="../ds.css" />
+    <link rel="stylesheet" href="../showcase.css" />
   </head>
   <body>
     <main class="ds-main">
@@ -14,39 +15,80 @@
             <a class="ds-primary" href="../">brijr/ds</a>
             <span class="ds-muted">Every styled element</span>
           </div>
-          <h1 class="ds-sr-only">Demo</h1>
         </div>
       </header>
 
       <section class="ds-section">
         <div class="ds-container">
           <div class="ds-stack">
-            <p>Everything ds.css styles, with nothing added. Each class has one behavior; spacing, line height, and columns adapt to the content and the space around it. Small gray text names the class or token.</p>
-          </div>
-
-          <!-- ── Type ──────────────────────────────────────────────── -->
-
-          <div class="ds-stack">
-            <h2 class="ds-label">Text sizes</h2>
-            <div class="ds-row"><span>Body, 16px on 20px</span><span class="ds-small ds-muted">default</span></div>
-            <div class="ds-row"><span class="ds-small">Dates and meta, 14px on 20px</span><span class="ds-small ds-muted">.ds-small</span></div>
-            <div class="ds-row"><span class="ds-label">Group label, 12px on 16px</span><span class="ds-small ds-muted">.ds-label</span></div>
+            <h1>Type, space, and structure.</h1>
+            <p>The type and layout primitives in ds.css, with an image and CSS animation showing the wider page spans. Each class has one behavior; spacing, line height, and columns adapt to the content and the space around it. Small gray text names the class or token.</p>
           </div>
 
           <div class="ds-stack">
-            <h2 class="ds-label">Line spacing follows the element</h2>
+            <h2>One canvas, three spans.</h2>
+            <p>Normal blocks fill six of twelve columns. Use .ds-wide for eight columns and .ds-full for all twelve. Place them directly inside .ds-container, alongside the text.</p>
+            <span class="ds-small ds-muted">Tablet: 6 / 10 / 12 columns. Desktop: 6 / 8 / 12. Phone: all blocks share the reading width.</span>
+          </div>
+
+          <figure class="ds-wide ds-stack">
+            <img src="../assets/grid-study.svg" width="1200" height="480" alt="Ascending black bars, a square, and a circle arranged on a pale field" loading="lazy" />
+            <figcaption class="ds-small ds-muted">.ds-wide · image across eight desktop columns</figcaption>
+          </figure>
+
+          <figure class="ds-full ds-stack motion-example">
+            <div class="motion-study" role="img" aria-label="Twelve vertical bars rising and falling in a continuous wave">
+              <span style="--i: 0"></span>
+              <span style="--i: 1"></span>
+              <span style="--i: 2"></span>
+              <span style="--i: 3"></span>
+              <span style="--i: 4"></span>
+              <span style="--i: 5"></span>
+              <span style="--i: 6"></span>
+              <span style="--i: 7"></span>
+              <span style="--i: 8"></span>
+              <span style="--i: 9"></span>
+              <span style="--i: 10"></span>
+              <span style="--i: 11"></span>
+            </div>
+            <figcaption class="ds-row ds-small ds-muted">
+              <span>.ds-full · CSS animation across twelve columns</span>
+              <label class="motion-toggle" for="demo-motion"><input id="demo-motion" type="checkbox" checked /> Animate</label>
+              <span class="motion-reduced">Reduced motion</span>
+            </figcaption>
+          </figure>
+
+        </div>
+      </section>
+
+      <section class="ds-section">
+        <div class="ds-container">
+          <div class="ds-stack">
+            <h2>Type</h2>
+            <p>A small scale set by element. Line spacing follows the element too, so text never needs sizing by hand.</p>
+          </div>
+
+          <div class="ds-stack">
+            <h3 class="ds-label">Text sizes</h3>
+            <div class="ds-row"><span>Body, 20px on 24px</span><span class="ds-small ds-muted">default</span></div>
+            <div class="ds-row"><span class="ds-small">Dates and meta, 16px on 24px</span><span class="ds-small ds-muted">.ds-small</span></div>
+            <div class="ds-row"><span class="ds-label">Group label, 14px on 20px</span><span class="ds-small ds-muted">.ds-label</span></div>
+          </div>
+
+          <div class="ds-stack">
+            <h3 class="ds-label">Line spacing follows the element</h3>
             <div class="ds-stack">
-              <span class="ds-small ds-muted">a single line · 20px</span>
-              <span>Names, links, labels, and headings sit on tight lines because they rarely wrap. If one does, it looks like this.</span>
+              <span class="ds-small ds-muted">a single line · 24px</span>
+              <span>Names, links, labels, and smaller headings sit on tight lines because they rarely wrap. If one does, it looks like this.</span>
             </div>
             <div class="ds-stack">
-              <span class="ds-small ds-muted">&lt;p&gt; and .ds-prose · 24px</span>
+              <span class="ds-small ds-muted">&lt;p&gt; and .ds-prose · 28px</span>
               <p>Any paragraph gets more room between lines, because paragraphs wrap. There is enough space for the eye to find the next line.</p>
             </div>
           </div>
 
           <div class="ds-stack">
-            <h2 class="ds-label">Text classes</h2>
+            <h3 class="ds-label">Text classes</h3>
             <div class="ds-row"><span class="ds-muted">Secondary text</span><span class="ds-small ds-muted">.ds-muted</span></div>
             <div class="ds-row"><span class="ds-primary">Accent text</span><span class="ds-small ds-muted">.ds-primary</span></div>
             <div class="ds-row"><span class="ds-medium">Medium weight</span><span class="ds-small ds-muted">.ds-medium</span></div>
@@ -57,10 +99,18 @@
             <div class="ds-row"><a href="#">Inline icon <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a><span class="ds-small ds-muted">svg in a link</span></div>
           </div>
 
-          <!-- ── Tokens ─────────────────────────────────────────────── -->
+        </div>
+      </section>
+
+      <section class="ds-section">
+        <div class="ds-container">
+          <div class="ds-stack">
+            <h2>Tokens</h2>
+            <p>Every size and color is a --ds-* variable. Space comes in multiples of 4px.</p>
+          </div>
 
           <div class="ds-stack">
-            <h2 class="ds-label">Space (4px grid)</h2>
+            <h3 class="ds-label">Space (4px grid)</h3>
             <div class="ds-row"><span>--ds-space-1</span><span class="ds-small ds-muted">4px</span></div>
             <div class="ds-row"><span>--ds-space-2</span><span class="ds-small ds-muted">8px</span></div>
             <div class="ds-row"><span>--ds-space-3</span><span class="ds-small ds-muted">12px</span></div>
@@ -72,7 +122,7 @@
           </div>
 
           <div class="ds-stack">
-            <h2 class="ds-label">Colors</h2>
+            <h3 class="ds-label">Colors</h3>
             <div class="ds-row"><span>Background</span><span class="ds-small ds-muted">--ds-background</span></div>
             <div class="ds-row"><span>Foreground</span><span class="ds-small ds-muted">--ds-foreground</span></div>
             <div class="ds-row"><span>Muted</span><span class="ds-small ds-muted">--ds-muted</span></div>
@@ -81,10 +131,18 @@
             <div class="ds-row"><span>Primary</span><span class="ds-small ds-muted">--ds-primary</span></div>
           </div>
 
-          <!-- ── Layout ─────────────────────────────────────────────── -->
+        </div>
+      </section>
+
+      <section class="ds-section">
+        <div class="ds-container">
+          <div class="ds-stack">
+            <h2>Layout</h2>
+            <p>Blocks that arrange what they hold. Spacing and columns adapt to the content and to the room each block has.</p>
+          </div>
 
           <div class="ds-stack">
-            <h2 class="ds-label">Masthead</h2>
+            <h3 class="ds-label">Masthead</h3>
             <div class="ds-masthead">
               <a class="ds-primary" href="#">Site name</a>
               <span class="ds-muted">Role</span>
@@ -92,7 +150,7 @@
           </div>
 
           <div class="ds-stack">
-            <h2 class="ds-label">Stack spacing adapts</h2>
+            <h3 class="ds-label">Stack spacing adapts</h3>
             <div class="ds-stack">
               <span class="ds-small ds-muted">.ds-stack of items · 12px</span>
               <div class="ds-stack"><p>First item</p><p>Second item</p><p>Third item</p></div>
@@ -111,7 +169,7 @@
           </div>
 
           <div class="ds-stack">
-            <h2 class="ds-label">Row and cluster</h2>
+            <h3 class="ds-label">Row and cluster</h3>
             <div class="ds-stack">
               <span class="ds-small ds-muted">.ds-row · title gives way, date stays whole</span>
               <div class="ds-row"><span class="ds-truncate">Mac for Web Development, a longer title to show how it gives way</span><span class="ds-small ds-muted">October 4, 2026</span></div>
@@ -123,8 +181,8 @@
           </div>
 
           <div class="ds-stack">
-            <h2 class="ds-label">Aside</h2>
-            <span class="ds-small ds-muted">.ds-aside · beside when there's room, stacked when not</span>
+            <h3 class="ds-label">Aside</h3>
+            <span class="ds-small ds-muted">.ds-aside · four tracks + eight tracks; stacked below 408px</span>
             <div class="ds-aside">
               <span class="ds-small ds-muted">2026</span>
               <div class="ds-stack"><a class="ds-link" href="#">Supermetal</a><p class="ds-muted">Designed and built the marketing site and docs for a data replication platform.</p></div>
@@ -140,8 +198,8 @@
           </div>
 
           <div class="ds-stack">
-            <h2 class="ds-label">Grid</h2>
-            <span class="ds-small ds-muted">.ds-grid · two equal columns, one on phones</span>
+            <h3 class="ds-label">Grid</h3>
+            <span class="ds-small ds-muted">.ds-grid · six tracks per item; full width below 408px</span>
             <div class="ds-grid">
               <div class="ds-stack"><a href="#">Work</a><p class="ds-muted">Sites and products, newest first.</p></div>
               <div class="ds-stack"><a href="#">Posts</a><p class="ds-muted">Notes on design and building.</p></div>
@@ -150,16 +208,24 @@
             </div>
           </div>
 
-          <!-- ── Button and form ─────────────────────────────────────── -->
+        </div>
+      </section>
+
+      <section class="ds-section">
+        <div class="ds-container">
+          <div class="ds-stack">
+            <h2>Buttons and forms</h2>
+            <p>One filled button for the main action, and plain fields that fill the width.</p>
+          </div>
 
           <div class="ds-stack">
-            <h2 class="ds-label">Button</h2>
-            <span class="ds-small ds-muted">button, .ds-button · one style, 40px, with a .ds-link beside it</span>
+            <h3 class="ds-label">Button</h3>
+            <span class="ds-small ds-muted">button, .ds-button · one style, 48px, with a .ds-link beside it</span>
             <div class="ds-cluster"><button type="button">Start free trial</button><a class="ds-link" href="#">See pricing</a></div>
           </div>
 
           <div class="ds-stack">
-            <h2 class="ds-label">Form</h2>
+            <h3 class="ds-label">Form</h3>
             <span class="ds-small ds-muted">.ds-field in a .ds-stack · label 8px above, fields 24px apart</span>
             <form class="ds-stack" action="#">
               <label class="ds-field"><span>Name</span><input type="text" name="name" autocomplete="name" placeholder="Ada Lovelace" /></label>
@@ -183,16 +249,19 @@
             </form>
           </div>
 
-          <!-- ── Prose ──────────────────────────────────────────────── -->
+        </div>
+      </section>
 
+      <section class="ds-section">
+        <div class="ds-container">
           <div class="ds-stack">
-            <h2 class="ds-label">Prose</h2>
-            <span class="ds-small ds-muted">.ds-prose · every element markdown can produce</span>
+            <h2>Prose</h2>
+            <p>For markdown, CMS, or article HTML. Every element markdown can produce is styled, with even spacing between blocks.</p>
           </div>
 
           <article class="ds-prose">
-            <h1>Heading one</h1>
-            <p>Body text in prose sits on 24px lines, capped at about 70 characters. It can hold <strong>strong text</strong>, <em>emphasis</em>, <a href="#">an inline link</a>, <code>inline code</code>, a key like <kbd>⌘K</kbd>, sample output like <samp>200 OK</samp>, <small>small print</small>, a footnote<sup>1</sup>, and H<sub>2</sub>O, all without making any line taller.</p>
+            <h2>Headings in prose</h2>
+            <p>Body text in prose sits on 28px lines and fills the text column. It can hold <strong>strong text</strong>, <em>emphasis</em>, <a href="#">an inline link</a>, <code>inline code</code>, a key like <kbd>⌘K</kbd>, sample output like <samp>200 OK</samp>, <small>small print</small>, a footnote<sup>1</sup>, and H<sub>2</sub>O, all without making any line taller.</p>
             <p>A second paragraph shows the 16px gap between blocks. Every block gets the same space above it, whatever comes before it.</p>
 
             <h2>Heading two</h2>
@@ -260,9 +329,9 @@
                 <tr><th>Element</th><th>Size</th><th>Line</th></tr>
               </thead>
               <tbody>
-                <tr><td>Body</td><td>16px</td><td>20px</td></tr>
-                <tr><td>Paragraph</td><td>16px</td><td>24px</td></tr>
-                <tr><td>Prose</td><td>16px</td><td>24px</td></tr>
+                <tr><td>Body</td><td>20px</td><td>24px</td></tr>
+                <tr><td>Paragraph</td><td>20px</td><td>28px</td></tr>
+                <tr><td>Prose</td><td>20px</td><td>28px</td></tr>
               </tbody>
             </table>
 
@@ -280,16 +349,24 @@
             </details>
           </article>
 
-          <!-- ── Base ───────────────────────────────────────────────── -->
+        </div>
+      </section>
 
+      <section class="ds-section">
+        <div class="ds-container">
           <div class="ds-stack">
-            <h2 class="ds-label">Headings outside prose</h2>
-            <span class="ds-small ds-muted">h1–h6 look like body text; use them for meaning</span>
-            <h3>Heading one through six all look like this</h3>
+            <h2>Defaults</h2>
+            <p>What every page gets without a class.</p>
           </div>
 
           <div class="ds-stack">
-            <h2 class="ds-label">Focus</h2>
+            <h3 class="ds-label">Headings outside prose</h3>
+            <span class="ds-small ds-muted">h1 is 36/40px, h2 is 24/32px; h3–h6 use body size</span>
+            <h3>Headings three through six use body size</h3>
+          </div>
+
+          <div class="ds-stack">
+            <h3 class="ds-label">Focus</h3>
             <span class="ds-small ds-muted">:focus-visible · press Tab to see the outline</span>
             <div class="ds-cluster"><a class="ds-link" href="#">First link</a><a class="ds-link" href="#">Second link</a></div>
           </div>
@@ -297,5 +374,13 @@
       </section>
     </main>
 
+    <!-- Grid overlay: the same .ds-container, so its columns match the page -->
+    <div class="grid-overlay" aria-hidden="true">
+      <div class="ds-container">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+    <label class="grid-toggle ds-small"><input type="checkbox" /> Show grid</label>
   </body>
 </html>

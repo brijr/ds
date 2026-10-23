@@ -6,10 +6,10 @@
  * form fields. It has no cards or other components. Build those on top
  * using the same tokens.
  *
- * Every class has one behavior. There are no size variants to choose from:
- * spacing, line height, and columns adapt to the content and the space
- * available. Your job is to pick the right element and class for the
- * content; the file decides how it looks.
+ * Every class has one role: reading content, wide media, or a full canvas.
+ * Spacing, line height, and reading columns adapt to the space available.
+ * Pick the right element and layout class for the content; the file
+ * handles its proportions and responsive behavior.
  *
  * Everything is prefixed ds- (classes) or --ds- (variables), and lives in
  * @layer ds, so any CSS of your own overrides it without specificity fights.
@@ -20,21 +20,26 @@
  * RULES FOR AGENTS — read before writing markup
  * ───────────────────────────────────────────────────────────────────────────
  *
- * 1. A small type scale, set by element. h1 is 24px, h2 is 20px, and all
- *    other text is 16px, except small meta (.ds-small, 14px) and group
- *    labels (.ds-label, 12px). Never set font sizes yourself. Below h2,
+ * 1. A small type scale, set by element. h1 is 36px, h2 is 24px, and all
+ *    other text is 20px, except small meta (.ds-small, 16px) and group
+ *    labels (.ds-label, 14px). Never set font sizes yourself. Below h2,
  *    show hierarchy with color (.ds-muted), weight (.ds-medium), order,
  *    and space. One h1 per page, h2 for its sections.
  *
  * 2. Line spacing follows the element, so never set it yourself:
- *      h1                                                32px
- *      h2                                                28px
- *      single lines (names, links, labels, h3–h6)        20px
- *      <p> paragraphs, and everything inside .ds-prose   24px
+ *      h1                                                40px
+ *      h2                                                32px
+ *      single lines (names, links, h3–h6)                24px
+ *      <p> paragraphs, and everything inside .ds-prose   28px
+ *      .ds-small 24px, .ds-label 20px
  *
- * 3. One width. Every page uses .ds-container: 512px of content (about
- *    70 characters per line), centered. Headers, grids, and text share its
- *    edges. There is no wider option.
+ * 3. A twelve-column page, up to 1344px wide. .ds-container places
+ *    normal blocks in the first six columns from 768px, up to 660px of
+ *    text. Add .ds-wide to a direct child for eight columns (ten on
+ *    tablets), or .ds-full for all twelve. On phones, all blocks use the
+ *    available reading width.
+ *    Keep wide/full blocks as direct children of .ds-container, alongside
+ *    text blocks, so they can extend beyond the reading column.
  *
  * 4. Page skeleton. Every page is built the same way:
  *
@@ -54,24 +59,43 @@
  *              …blocks…
  *            </div>
  *          </section>
+ *          <section class="ds-section">
+ *            <div class="ds-container">
+ *              <div class="ds-stack">
+ *                <h2>Section title</h2>
+ *                <p>What this section covers.</p>
+ *              </div>
+ *              …blocks…
+ *            </div>
+ *          </section>
  *        </main>
  *      </body>
  *
- *    Each page has one <h1>, at the start of its first section.
+ *    Each page has one <h1>, at the start of its first section. Give
+ *    each topic its own section, opening with its <h2>; group labels
+ *    inside it are <h3 class="ds-label">. Sections sit as far apart as
+ *    blocks do (48–72px), so splitting a page never changes its rhythm.
  *
  * 5. Blocks. Spacing is automatic:
- *      .ds-container  page blocks, 32px apart
+ *      .ds-container  twelve-column page; text from column 1, 48–72px gaps
+ *      .ds-wide       media across eight columns (ten on tablets)
+ *      .ds-full       media across the entire twelve-column canvas
  *      .ds-stack      items, 12px apart. 24px apart when the items are
  *                     groups themselves (stacks, asides, grids, fields). A
- *                     .ds-label as the first child sits 8px above the rest.
+ *                     .ds-label as the first child sits 8px above the rest;
+ *                     an h1 sits 24px above what follows it.
  *      .ds-row        one line, items pushed to both ends (title + date)
  *      .ds-cluster    a wrapping line of items, like links
  *      .ds-aside      a label or date beside its content; the label moves
  *                     on top when there isn't room. Exactly two children:
  *                     the label, then one element holding the content.
+ *                     Uses four of twelve local tracks for the label and
+ *                     eight for content, which in the text span is two
+ *                     and four page columns; both stack below 408px.
  *      .ds-grid       two equal columns, or one on phones. For several
  *                     items of one kind. Columns keep the same width
- *                     whatever the number of items.
+ *                     whatever the number of items. Each item spans six
+ *                     of twelve local tracks, or all twelve below 408px.
  *      .ds-prose      markdown, CMS, or article HTML. Not for UI.
  *
  *      <div class="ds-stack">
@@ -95,7 +119,7 @@
  *    they fade slightly on hover.
  *
  * 7. 4px grid. The grid comes from the type: 4px is the largest step that
- *    divides every line height (16, 20, 24, 28, 32). All vertical spacing,
+ *    divides every line height (20, 24, 28, 32, 40). All vertical spacing,
  *    line heights, and fixed sizes are multiples of 4px, so every block
  *    starts on a 4px line. Widths that stretch with the screen (the column
  *    on phones, grid columns) are fluid and aren't. If you add CSS, use the
@@ -113,7 +137,7 @@
  *    data-theme="dark" or data-theme="light" on <html> to force one.
  *
  * 9. Buttons and forms. <button> and .ds-button (on a link) are the one
- *    button: filled, 40px. Give a group one button for its main action and
+ *    button: filled, 48px. Give a group one button for its main action and
  *    make other actions .ds-link beside it, in a .ds-cluster. Wrap each
  *    field in <label class="ds-field"> with its label text first. A form
  *    is a .ds-stack of fields, then the button. Checkboxes and radios sit
@@ -140,19 +164,20 @@
 
     /*
      * 4px grid. Every size that takes up space is a multiple of 4px. Line
-     * heights are fixed lengths, not ratios, so lines are 16–32px tall.
+     * heights are fixed lengths, not ratios, so lines are 16–44px tall.
      */
-    --ds-text-xl: 1.5rem; /* 24px — h1 */
-    --ds-text-lg: 1.25rem; /* 20px — h2 */
-    --ds-text-base: 1rem; /* 16px — everything else */
-    --ds-text-sm: 0.875rem; /* 14px — dates, meta */
-    --ds-text-xs: 0.75rem; /* 12px — group labels */
+    --ds-text-xl: 2.25rem; /* 36px — h1 */
+    --ds-text-lg: 1.5rem; /* 24px — h2 */
+    --ds-text-base: 1.25rem; /* 20px — everything else */
+    --ds-text-sm: 1rem; /* 16px — dates, meta */
+    --ds-text-xs: 0.875rem; /* 14px — group labels */
 
-    --ds-leading-xl: 2rem; /* 32px — h1 */
-    --ds-leading-lg: 1.75rem; /* 28px — h2 */
-    --ds-leading-xs: 1rem; /* 16px — 12px labels */
-    --ds-leading-tight: 1.25rem; /* 20px — single lines, 14px text */
-    --ds-leading-normal: 1.5rem; /* 24px — paragraphs, prose */
+    --ds-leading-xl: 2.5rem; /* 40px — h1 */
+    --ds-leading-lg: 2rem; /* 32px — h2 */
+    --ds-leading-xs: 1.25rem; /* 20px — 14px labels */
+    --ds-leading-sm: 1.5rem; /* 24px — 16px meta and code */
+    --ds-leading-tight: 1.5rem; /* 24px — single lines, same as .ds-small */
+    --ds-leading-normal: 1.75rem; /* 28px — paragraphs, prose */
     --ds-tracking-tight: -0.025em; /* headings in prose */
 
     --ds-weight-medium: 500;
@@ -169,20 +194,24 @@
     --ds-space-18: 4.5rem; /* 72 */
     --ds-hairline: 1px; /* borders; subtract from padding to stay on grid */
 
-    /* Layout. The column is the text width plus its padding, so text,
-       headers, and grids share the same edges on every page. */
-    --ds-prose: 32rem; /* 512px — about 70 characters per line */
-    --ds-container: calc(var(--ds-prose) + 2 * var(--ds-container-pad));
+    /* A twelve-column canvas, up to 1344px wide. On phones it is one
+       reading width; from 768px, text spans the first six columns, so the
+       reading width grows with the canvas to half of it (660px). */
+    --ds-prose: 32rem; /* 512px on phones — about 70 characters per line */
+    --ds-canvas-max: 84rem; /* 1344px — the widest the twelve columns get (90px each) */
+    --ds-canvas: var(--ds-prose);
+    --ds-container: calc(var(--ds-canvas) + 2 * var(--ds-container-pad));
     --ds-gutter: var(--ds-space-6); /* 24px between columns */
-    --ds-grid-min: 12rem; /* 192px — narrowest grid column */
-    --ds-aside-label: 8rem; /* 128px — label column beside content */
+    --ds-grid-tracks: 12; /* page canvas and local layout subdivisions */
+    --ds-block-gap: var(--ds-space-12); /* 48px between page blocks */
     --ds-radius: 0.25rem; /* 4px — code blocks, images, buttons, fields */
-    --ds-control: 2.5rem; /* 40px — button and field height */
+    --ds-control: 3rem; /* 48px — button and field height */
 
-    /* Page padding (phones; larger screens below) */
-    --ds-main-pad: var(--ds-space-12);
-    --ds-section-pad: var(--ds-space-2);
-    --ds-container-pad: var(--ds-space-4);
+    /* Page padding, one job per layer (phones; larger screens below):
+       .ds-section sets the space above and below each section, including
+       the page's top and bottom; .ds-container sets the sides. */
+    --ds-section-pad: var(--ds-space-6); /* 24: half the block gap */
+    --ds-container-pad: var(--ds-space-6); /* 24 */
 
     /*
      * Color: light-dark(<light>, <dark>). Tints (link underlines, code
@@ -199,13 +228,13 @@
     color-scheme: light dark;
   }
 
-  /* The only screen-size breakpoint: more page padding from 640px up.
-     Grids and asides respond to the space they're in instead (below). */
+  /* Page spacing increases from 640px; canvas spans adapt below.
+     Local grids and asides respond to their own available width. */
   @media (min-width: 640px) {
     :root {
-      --ds-main-pad: var(--ds-space-18);
-      --ds-section-pad: var(--ds-space-4);
-      --ds-container-pad: var(--ds-space-6);
+      --ds-block-gap: var(--ds-space-18);
+      --ds-section-pad: calc(var(--ds-space-8) + var(--ds-space-1)); /* 36 */
+      --ds-container-pad: var(--ds-space-8); /* 32 */
     }
   }
 
@@ -258,7 +287,7 @@
     font-kerning: normal;
   }
 
-  /* A small scale: h1 24px, h2 20px, h3–h6 body size. Headings split
+  /* A small scale: h1 36px, h2 24px, h3–h6 body size. Headings split
      their lines evenly. */
   h1,
   h2,
@@ -352,23 +381,58 @@
 /* ── 3. Layout ─────────────────────────────────────────────────────────── */
 
 @layer ds.layout {
-  .ds-main {
-    padding: var(--ds-main-pad) var(--ds-space-2);
-  }
-
   .ds-section {
     padding-block: var(--ds-section-pad);
   }
 
-  /* The page column. Blocks inside are 32px apart. */
+  /* Every block starts at column 1; normal blocks take the reading span.
+     Wide and full media are siblings of text, never trapped inside a
+     narrow prose wrapper. */
   .ds-container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--ds-space-8);
+    display: grid;
+    grid-template-columns: repeat(var(--ds-grid-tracks), minmax(0, 1fr));
+    /* On phones every block spans all twelve tracks, so the gutters are
+       invisible. Cap them so twelve tracks fit even a 280px screen. */
+    gap: var(--ds-block-gap) min(var(--ds-gutter), calc(100% / var(--ds-grid-tracks)));
     width: 100%;
     max-width: var(--ds-container);
     margin-inline: auto;
-    padding: var(--ds-container-pad);
+    padding-inline: var(--ds-container-pad);
+  }
+  .ds-container > * {
+    grid-column: 1 / -1;
+    min-inline-size: 0;
+  }
+  .ds-container > :is(.ds-wide, .ds-full) {
+    inline-size: 100%;
+    max-inline-size: none;
+  }
+  :where(.ds-wide, .ds-full) > :is(img, video, svg) {
+    width: 100%;
+    height: auto;
+  }
+
+  /* From 768px: text 6 columns, wide 10, full 12. From 1280px, wide
+     narrows to 8. The canvas grows smoothly up to its maximum. */
+  @media (min-width: 48rem) {
+    :root {
+      --ds-canvas: var(--ds-canvas-max);
+      --ds-prose: calc((var(--ds-canvas-max) - var(--ds-gutter)) / 2);
+    }
+    .ds-container > * {
+      grid-column: 1 / span 6;
+    }
+    .ds-container > .ds-wide {
+      grid-column: 1 / span 10;
+    }
+    .ds-container > .ds-full {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (min-width: 80rem) {
+    .ds-container > .ds-wide {
+      grid-column: 1 / span 8;
+    }
   }
 
   /* Items 12px apart. Groups of groups get 24px. */
@@ -388,6 +452,13 @@
     > .ds-label:first-child
     + * {
     margin-block-start: calc(var(--ds-space-2) - var(--ds-space-6));
+  }
+  /* A page title needs more room: 24px below an h1, whatever the gap */
+  .ds-stack > h1 + * {
+    margin-block-start: calc(var(--ds-space-6) - var(--ds-space-3));
+  }
+  .ds-stack:has(> :is(.ds-stack, .ds-aside, .ds-grid, .ds-field)) > h1 + * {
+    margin-block-start: 0;
   }
 
   /* One line, pushed to both ends. Centered, not baseline-aligned, so
@@ -414,41 +485,41 @@
     gap: var(--ds-space-2) var(--ds-space-3);
   }
 
-  /* Equal columns, as many as fit at --ds-grid-min or wider: two in the
-     page column, one on phones. auto-fill keeps empty columns, so one item
-     is as wide as two items are. */
-  .ds-grid {
+  /* Local twelve-track layouts, measured against their own width.
+     Splits are even (6/6, 4/8), so inside the six-column text span they
+     land on page columns. At 660px: grid cells are 318px; asides and
+     mastheads have a 204px label and 432px content. */
+  :where(.ds-grid, .ds-aside, .ds-masthead) {
     display: grid;
-    grid-template-columns: repeat(
-      auto-fill,
-      minmax(min(var(--ds-grid-min), 100%), 1fr)
-    );
-    gap: var(--ds-gutter);
-  }
-
-  /* Label beside content, measured against the aside's own width, so it
-     works anywhere (in a grid cell, outside the page column). The label is
-     a fixed 128px; the content takes the rest. When the content would get
-     less than 60% of the width, it wraps under the label. */
-  .ds-aside {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--ds-space-2) var(--ds-gutter);
-  }
-  .ds-aside > :first-child {
-    flex: 0 0 var(--ds-aside-label);
-  }
-  .ds-aside > :last-child {
-    flex: 1 1 0;
-    min-inline-size: 60%;
-  }
-
-  /* Page header: name at the start, role at the end */
-  .ds-masthead {
-    display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: repeat(var(--ds-grid-tracks), minmax(0, 1fr));
+    container: ds-layout / inline-size;
     align-items: start;
-    gap: var(--ds-space-2);
+    /* Stacked layouts may be nested inside a narrow grid cell. Cap the
+       invisible internal gutters so twelve tracks cannot force overflow. */
+    gap: var(--ds-space-2) min(var(--ds-gutter), calc(100% / var(--ds-grid-tracks)));
+  }
+  :where(.ds-grid, .ds-aside, .ds-masthead) > * {
+    grid-column: 1 / -1;
+    min-inline-size: 0;
+    overflow-wrap: break-word;
+  }
+  .ds-grid {
+    row-gap: var(--ds-gutter);
+  }
+
+  /* 408px = two 192px reading columns + one 24px gutter. Query the
+     layout itself, so a grid or aside nested in a narrow cell stacks too.
+     Fixed spans retain empty space when a grid has an odd item count. */
+  @container ds-layout (min-width: 25.5rem) {
+    .ds-grid > * {
+      grid-column: span 6;
+    }
+    :is(.ds-aside, .ds-masthead) > :first-child {
+      grid-column: 1 / span 4;
+    }
+    :is(.ds-aside, .ds-masthead) > :last-child {
+      grid-column: 5 / -1;
+    }
   }
 
   /* SVGs placed directly in a layout box keep their full height */
@@ -544,7 +615,7 @@
     position: relative;
     padding-inline-start: var(--ds-space-6);
   }
-  /* 4px dot, centered on the first 24px line */
+  /* 4px dot, centered on the first 28px line */
   :where(.ds-prose) :where(ul > li)::before {
     content: "";
     position: absolute;
@@ -601,7 +672,7 @@
     background: var(--ds-surface, color-mix(in oklab, var(--ds-muted) 50%, transparent));
     font-family: var(--ds-font-mono);
     font-size: var(--ds-text-sm);
-    line-height: var(--ds-leading-tight);
+    line-height: var(--ds-leading-sm);
     overflow-x: auto;
   }
   :where(.ds-prose) :where(pre code) {
@@ -609,7 +680,7 @@
     line-height: inherit;
   }
 
-  /* Tables: each row is 8 + 24 + 7 + 1 (hairline) = 40px. Separate borders,
+  /* Tables: each row is 8 + 28 + 7 + 1 (hairline) = 44px. Separate borders,
      because collapsed borders split into half pixels. */
   :where(.ds-prose) :where(table) {
     width: 100%;
@@ -634,7 +705,7 @@
   :where(.ds-prose) :where(figcaption) {
     color: var(--ds-muted-foreground);
     font-size: var(--ds-text-sm);
-    line-height: var(--ds-leading-tight);
+    line-height: var(--ds-leading-sm);
   }
 
   /* Quotes: 2px rule + 14px padding puts the text 16px in */
@@ -659,7 +730,8 @@
 }
 
 /* ── 5. Text ───────────────────────────────────────────────────────────── */
-/* Last layer, so a text class always wins over prose and layout styles.   */
+/* After prose and layout, so a text class wins over both. Only buttons    */
+/* and forms come later.                                                   */
 
 @layer ds.text {
   /* Small label that leads a group, e.g. "Work" over a list */
@@ -672,7 +744,7 @@
   /* Dates and meta */
   .ds-small {
     font-size: var(--ds-text-sm);
-    line-height: var(--ds-leading-tight);
+    line-height: var(--ds-leading-sm);
   }
 
   .ds-muted {
@@ -728,7 +800,7 @@
 }
 
 /* ── 6. Buttons and forms ──────────────────────────────────────────────── */
-/* One button style and plain fields, all 40px tall. Last layer, so a       */
+/* One button style and plain fields, all 48px tall. Last layer, so a       */
 /* button inside prose or with a text class keeps its look.                 */
 
 @layer ds.form {
@@ -768,8 +840,8 @@
     gap: var(--ds-space-2);
   }
 
-  /* Text fields, selects, and textareas fill the width. 9px padding and a
-     1px border around a 20px line make 40px. */
+  /* Text fields, selects, and textareas fill the width. 11px padding and
+     a 1px border around a 24px line make 48px. */
   :where(
       input:not([type="checkbox"], [type="radio"], [type="submit"], [type="button"], [type="reset"], [type="file"], [type="range"], [type="color"], [type="image"], [type="hidden"]),
       select,

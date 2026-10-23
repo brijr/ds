@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A shared Swiss grid</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { background: transparent; margin: 0; }
+  body { font: 400 14px/1.5 var(--font-sans, system-ui, sans-serif); color: var(--foreground); }
+  #swiss-grid-structure { width: 100%; }
+  #swiss-grid-structure h2 { margin: 0; font-size: 18px; font-weight: 500; }
+  #swiss-grid-structure .subtitle { margin: 4px 0 24px; color: var(--muted-foreground); }
+  #swiss-grid-structure .diagram { width: 100%; max-width: 512px; margin-inline: auto; }
+  #swiss-grid-structure .mono { font: 400 12px/1.5 var(--font-mono, ui-monospace, monospace); font-variant-numeric: tabular-nums; }
+  #swiss-grid-structure .ruler { display: flex; gap: 12px; align-items: center; color: var(--muted-foreground); margin-bottom: 12px; }
+  #swiss-grid-structure .ruler::before, #swiss-grid-structure .ruler::after { content: ''; flex: 1; height: 5px; border-top: 1px solid var(--muted-foreground); }
+  #swiss-grid-structure .ruler::before { border-left: 1px solid var(--muted-foreground); }
+  #swiss-grid-structure .ruler::after { border-right: 1px solid var(--muted-foreground); }
+  #swiss-grid-structure .structure { position: relative; }
+  #swiss-grid-structure .tracks, #swiss-grid-structure .modules, #swiss-grid-structure .row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 4.6875%; }
+  #swiss-grid-structure .tracks { position: absolute; inset: 0; pointer-events: none; }
+  #swiss-grid-structure .track { background: color-mix(in srgb, var(--chart-1) 7%, transparent); border-inline: 1px solid color-mix(in srgb, var(--chart-1) 20%, transparent); }
+  #swiss-grid-structure .modules { position: relative; }
+  #swiss-grid-structure .module { text-align: center; padding-block: 8px; color: var(--muted-foreground); }
+  #swiss-grid-structure .rows { display: grid; gap: 24px; padding-block: 24px; }
+  #swiss-grid-structure .row { position: relative; }
+  #swiss-grid-structure .mark { min-height: 48px; padding: 12px; display: flex; align-items: center; background: color-mix(in srgb, var(--chart-1) 17%, var(--background)); }
+  #swiss-grid-structure .rail { background: color-mix(in srgb, var(--foreground) 7%, var(--background)); color: var(--foreground); }
+  #swiss-grid-structure .three { grid-column: span 3; }
+  #swiss-grid-structure .two { grid-column: span 2; }
+  #swiss-grid-structure .aligned { grid-column: 2 / 5; }
+  #swiss-grid-structure .row-label { color: var(--muted-foreground); margin-bottom: 8px; }
+  #swiss-grid-structure .composition { position: relative; }
+  #swiss-grid-structure .detail { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 16px; color: var(--muted-foreground); }
+  #swiss-grid-structure .detail span { display: flex; align-items: center; gap: 8px; }
+  #swiss-grid-structure .swatch { width: 10px; height: 10px; background: color-mix(in srgb, var(--chart-1) 35%, transparent); }
+  #swiss-grid-structure .line { width: 1px; height: 12px; background: color-mix(in srgb, var(--chart-1) 60%, transparent); }
+  @media (max-width: 380px) { #swiss-grid-structure .mark { padding-inline: 8px; } }
+</style>
+</head>
+<body>
+<section id="swiss-grid-structure" aria-label="Proposed shared four-column grid for ds.css">
+  <h2>One grid, several compositions</h2>
+  <div class="subtitle">Proposed structure · 24px gutters · schematic</div>
+  <div class="diagram" role="img" aria-label="Proposed 512px grid divided into four 110px tracks, with 24px gutters. A two-track span is 244px. An aside uses one 110px track for its label and three tracks, 378px, for content. Titles, body copy, and lists share the second track's left edge. These are layout modules, not four narrow reading columns.">
+    <div class="ruler mono"><span>512px content</span></div>
+    <div class="structure">
+      <div class="tracks" aria-hidden="true"><div class="track"></div><div class="track"></div><div class="track"></div><div class="track"></div></div>
+      <div class="modules mono" aria-hidden="true"><div class="module">110</div><div class="module">110</div><div class="module">110</div><div class="module">110</div></div>
+      <div class="rows">
+        <div class="composition">
+          <div class="row-label mono">Label + headline</div>
+          <div class="row"><div class="mark rail">Section</div><div class="mark three">Headline / 3 tracks</div></div>
+        </div>
+        <div class="composition">
+          <div class="row-label mono">Two equal groups</div>
+          <div class="row"><div class="mark two">Work / 244px</div><div class="mark two">Posts / 244px</div></div>
+        </div>
+        <div class="composition">
+          <div class="row-label mono">Date + content</div>
+          <div class="row"><div class="mark rail">2026</div><div class="mark three">Project / 378px</div></div>
+        </div>
+        <div class="composition">
+          <div class="row-label mono">Body follows the same edge</div>
+          <div class="row"><div class="mark aligned">Description / 3 tracks</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="detail mono"><span><i class="swatch" aria-hidden="true"></i>Content spans</span><span><i class="line" aria-hidden="true"></i>Shared alignment lines</span></div>
+  </div>
+</section>
+<script>
+(() => {
+  const root = document.getElementById('swiss-grid-structure');
+  const diagram = root.querySelector('.diagram');
+  new ResizeObserver(() => {
+    console.assert(document.documentElement.scrollWidth <= window.innerWidth, 'Diagram fits viewport');
+    console.assert(root.querySelectorAll('.track').length === 4, 'Four shared tracks');
+    console.log('Shared-grid diagram checked at ' + Math.round(diagram.getBoundingClientRect().width) + 'px');
+  }).observe(diagram);
+})();
+</script>
+</body>
+</html>

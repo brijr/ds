@@ -1,0 +1,115 @@
+/* Site examples only. Page placement and reading widths come from ds.css. */
+.motion-study {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: end;
+  gap: var(--ds-gutter);
+  height: calc(var(--ds-space-18) * 4);
+  overflow: hidden;
+}
+.motion-study > span {
+  height: 100%;
+  background: var(--ds-foreground);
+  transform-origin: bottom;
+  transform: scaleY(.3);
+  animation: ds-study-wave 4800ms ease-in-out infinite alternate;
+  animation-delay: calc(var(--i) * -320ms);
+}
+.motion-example:has(input:not(:checked)) .motion-study > span {
+  animation-play-state: paused;
+}
+.motion-reduced { display: none; }
+@keyframes ds-study-wave {
+  from { transform: scaleY(.16); }
+  to { transform: scaleY(1); }
+}
+@media (max-width: 47.999rem) {
+  .motion-study {
+    gap: var(--ds-space-2);
+    height: calc(var(--ds-space-18) * 2);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-study > span {
+    animation: none;
+    transform: scaleY(calc(.2 + var(--i) * .06));
+  }
+  .motion-toggle { display: none; }
+  .motion-reduced { display: inline; }
+}
+
+/* Demo grid overlay. It reuses .ds-container, so the twelve columns line
+   up with the page at every width. Columns in the reading span are darker. */
+.grid-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+body:has(.grid-toggle input:checked) .grid-overlay {
+  display: block;
+}
+.grid-overlay .ds-container {
+  height: 100%;
+}
+.grid-overlay .ds-container > span {
+  grid-column: auto;
+  /* Reading span: all twelve on phones, the first six from 768px */
+  background: color-mix(in oklab, var(--ds-primary) 12%, transparent);
+}
+@media (min-width: 48rem) {
+  .grid-overlay .ds-container > span:nth-child(n + 7) {
+    background: color-mix(in oklab, var(--ds-primary) 6%, transparent);
+  }
+}
+
+.grid-toggle {
+  position: fixed;
+  inset-block-end: var(--ds-space-4);
+  inset-inline-end: var(--ds-space-4);
+  z-index: 11;
+  padding: calc(var(--ds-space-2) - var(--ds-hairline)) var(--ds-space-3);
+  border: var(--ds-hairline) solid var(--ds-border);
+  border-radius: var(--ds-radius);
+  background: var(--ds-background);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* With the grid on, outline each section and container and tag it by
+   name. Outlines take no space, so nothing on the page moves. Sections
+   are tagged at the top right and containers at the top left, so the
+   tags don't overlap on phones where their edges meet. */
+body:has(.grid-toggle input:checked) main :is(.ds-section, .ds-container) {
+  position: relative;
+  outline: var(--ds-hairline) dashed var(--grid-line);
+  outline-offset: calc(-1 * var(--ds-hairline));
+}
+body:has(.grid-toggle input:checked) main .ds-section {
+  --grid-line: light-dark(#e11d48, #fb7185);
+}
+body:has(.grid-toggle input:checked) main .ds-container {
+  --grid-line: light-dark(#2563eb, #60a5fa);
+  outline-style: solid;
+}
+body:has(.grid-toggle input:checked) main :is(.ds-section, .ds-container)::before {
+  position: absolute;
+  inset-block-start: 0;
+  padding-inline: var(--ds-space-1);
+  background: var(--grid-line);
+  color: var(--ds-background);
+  font-size: var(--ds-text-xs);
+  line-height: var(--ds-leading-xs);
+  pointer-events: none;
+}
+body:has(.grid-toggle input:checked) main .ds-section::before {
+  content: "ds-section";
+  inset-inline-end: 0;
+}
+/* Containers have no top padding, so their tag sits just above the edge */
+body:has(.grid-toggle input:checked) main .ds-container::before {
+  content: "ds-container";
+  inset-block: auto 100%;
+  inset-inline-start: 0;
+}

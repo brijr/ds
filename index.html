@@ -6,6 +6,7 @@
     <title>brijr/ds — typography, spacing, and layout in one CSS file</title>
     <meta name="description" content="One CSS file for typography, spacing, and layout. Written so an AI agent can use it." />
     <link rel="stylesheet" href="ds.css" />
+    <link rel="stylesheet" href="showcase.css" />
   </head>
   <body>
     <main class="ds-main" id="main">
@@ -32,34 +33,89 @@
             <a class="ds-link" href="#use">How to use it</a>
           </nav>
 
-          <article class="ds-prose">
+          <figure class="ds-full ds-stack motion-example">
+            <div class="motion-study" role="img" aria-label="Twelve vertical bars rising and falling in a continuous wave">
+              <span style="--i: 0"></span>
+              <span style="--i: 1"></span>
+              <span style="--i: 2"></span>
+              <span style="--i: 3"></span>
+              <span style="--i: 4"></span>
+              <span style="--i: 5"></span>
+              <span style="--i: 6"></span>
+              <span style="--i: 7"></span>
+              <span style="--i: 8"></span>
+              <span style="--i: 9"></span>
+              <span style="--i: 10"></span>
+              <span style="--i: 11"></span>
+            </div>
+            <figcaption class="ds-row ds-small ds-muted">
+              <span>A little room for motion.</span>
+              <label class="motion-toggle" for="home-motion"><input id="home-motion" type="checkbox" checked /> Animate</label>
+              <span class="motion-reduced">Reduced motion</span>
+            </figcaption>
+          </figure>
+
+          <section class="ds-stack">
             <h2>Why</h2>
-            <p>Most of what makes a website feel considered is not its components. It is the type, the space between things, and where things sit on the page. This file handles that, plus one button and plain form fields, and leaves everything else to you.</p>
+            <div class="ds-prose">
+              <p>Most of what makes a website feel considered is not its components. It is the type, the space between things, and where things sit on the page. This file handles that, plus one button and plain form fields, and leaves everything else to you.</p>
+            </div>
+          </section>
 
+          <section class="ds-stack">
             <h2>Typography</h2>
-            <p>Text uses the system's own sans serif: Helvetica Neue on Mac, Segoe UI on Windows, and Nimbus Sans or Liberation Sans on Linux. Nothing downloads, so the page never shifts while fonts load.</p>
-            <p>The type scale is small. A page title is 24px, section headings are 20px, and everything else is 16px. Below that, hierarchy comes from color, weight, order, and space, so pages read calmly and nothing shouts.</p>
-            <p>There are no sizes to pick. Each heading level has its size, and line spacing follows the element: tight for single lines like names and labels, and more open for paragraphs and long-form writing.</p>
+            <div class="ds-prose">
+              <p>Text uses the system's own sans serif: Helvetica Neue on Mac, Segoe UI on Windows, and Nimbus Sans or Liberation Sans on Linux. Nothing downloads, so the page never shifts while fonts load.</p>
+              <p>The type scale is small. Body text starts at 20px. A page title is 36px on 40px lines, section headings are 24px, and everything else is 20px. Below that, hierarchy comes from color, weight, order, and space, with a clear contrast between the page title and its supporting text.</p>
+              <p>There are no sizes to pick. Each heading level has its size, and line spacing follows the element: tight for single lines like names and labels, and more open for paragraphs and long-form writing.</p>
+            </div>
+          </section>
 
+          <section class="ds-stack">
             <h2>Spacing</h2>
-            <p>Every gap comes from one scale built on 4px, and each one is picked by context rather than by hand. Blocks on a page are 32px apart. Items in a group are 12px apart, groups of groups 24px, and a label sits 8px above what it labels. In long-form writing, paragraphs are 16px apart and a heading gets four times more space above it than below, so it always groups with the text it introduces.</p>
+            <div class="ds-prose">
+              <p>Every gap comes from one scale built on 4px, and each one is picked by context rather than by hand. Blocks on a page are 48px apart, increasing to 72px on larger screens. Items in a group are 12px apart, groups of groups 24px, and a label sits 8px above what it labels. In long-form writing, paragraphs are 16px apart and a heading gets four times more space above it than below, so it always groups with the text it introduces.</p>
+            </div>
+          </section>
 
+          <section class="ds-stack">
             <h2>Layout</h2>
-            <p>Every page is the same width: one centered column of 512px, about 70 characters per line, so headers, text, and grids all share the same edges. A simple header holds the site name and a short description.</p>
-            <p>Columns respond to the space they have, not to a choice. A grid is two equal columns, or one on a phone, and its columns keep the same width however many items it holds. An aside puts a date or label beside its content when there is room and above it when there isn't. See the <a href="demo/">demo</a> for every element.</p>
+            <div class="ds-prose">
+              <p>The page is a twelve-column canvas with 24px gutters. Everything starts at the first column. Text fills six columns, up to 660px wide. Images can stretch across eight columns, and motion or other visual work can use all twelve. Headings stay above the text.</p>
+              <p>Columns respond to the space they have, not to a choice. A grid is two equal columns, or one on a phone, and its columns keep the same width however many items it holds. Inside a content block, a grid divides its own twelve tracks into two equal groups of six. An aside uses four tracks for a label and eight for its content, so both land on page columns. Below 408px of available width, both layouts stack. On tablets, wide images stretch across ten columns; on phones, everything uses the full reading width. See the <a href="demo/">demo</a> for every element.</p>
+            </div>
+          </section>
 
+          <figure class="ds-wide ds-stack">
+            <img src="assets/grid-study.svg" width="1200" height="480" alt="Ascending black bars, a square, and a circle arranged on a pale field" loading="lazy" />
+            <figcaption class="ds-small ds-muted">A study in proportion. More space for the image, the same rhythm underneath.</figcaption>
+          </figure>
+
+          <section class="ds-stack">
             <h2>Buttons and forms</h2>
-            <p>There is one button: filled with the text color, 40px tall. Give each group one button for its main action and make the rest plain links beside it. Fields put their label 8px above a full-width input, and fields in a form sit 24px apart.</p>
+            <div class="ds-prose">
+              <p>There is one button: filled with the text color, 48px tall. Give each group one button for its main action and make the rest plain links beside it. Fields put their label 8px above a full-width input, and fields in a form sit 24px apart.</p>
+            </div>
+          </section>
 
+          <section class="ds-stack">
             <h2 id="use">How to use it</h2>
-            <p>Add the file to any page. There is nothing to install.</p>
-            <pre><code>&lt;link rel="stylesheet" href="ds.css"&gt;</code></pre>
-            <p>To build with an agent, give it the file and ask it to follow the rules at the top. They spell out the page structure, which class to use for what, and what to avoid.</p>
-            <p>The colors are neutral grays, with light and dark modes that follow the system. To change one, or to give links an accent color, override its variable in <code>:root</code>:</p>
-            <pre><code>:root {
+            <div class="ds-prose">
+              <p>Add the file to any page. There is nothing to install.</p>
+              <pre><code>&lt;link rel="stylesheet" href="ds.css"&gt;</code></pre>
+              <p>Keep text and wider media as siblings inside the page container:</p>
+              <pre><code>&lt;div class="ds-container"&gt;
+  &lt;div class="ds-prose"&gt;Text&lt;/div&gt;
+  &lt;figure class="ds-wide"&gt;…&lt;/figure&gt;
+  &lt;div class="ds-full"&gt;…&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+              <p>To build with an agent, give it the file and ask it to follow the rules at the top. They spell out the page structure, which class to use for what, and what to avoid.</p>
+              <p>The colors are neutral grays, with light and dark modes that follow the system. To change one, or to give links an accent color, override its variable in <code>:root</code>:</p>
+              <pre><code>:root {
   --ds-primary: light-dark(#2563eb, #60a5fa);
 }</code></pre>
-          </article>
+            </div>
+          </section>
         </div>
       </section>
     </main>
